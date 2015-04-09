@@ -44,12 +44,11 @@ with pyinsim. If not, see <http://www.gnu.org/licenses/>.
 AUTHOR
 
 Written by Alex McBride
-Copyright Alex McBride 2011
-Email: xandermcbride@gmail.com
-Website: http://pyinsim.codeplex.com/
+Copyright Alex McBride 2012-2015
+Website: https://github.com/alexmcbride/pyinsim
 
 THANKS
 
-Thanks to Constantin Köpplinger (morpha) for his work on the strmanip module.
+Thanks to Constantin Kï¿½pplinger (morpha) for his work on the strmanip module.
 Thanks to tmehlinger for his work on InSim Relay support.
 
