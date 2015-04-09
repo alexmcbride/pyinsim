@@ -5,7 +5,7 @@
 # Copyright © 2010 Constantin Köpplinger
 #
 # toUnicode() based on pyinsim.strToUnicode()
-# Copyright © 2008-2011 Alex McBride
+# Copyright © 2008-2015 Alex McBride
 
 __all__ = ['toUnicode', 'fromUnicode']
 

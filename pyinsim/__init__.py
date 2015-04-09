@@ -1,12 +1,12 @@
 # __init__.py - init module for pyinsim
 #
-# Copyright 2008-2011 Alex McBride <xandermcbride@gmail.com>
+# Copyright 2008-2015 Alex McBride <xandermcbride@gmail.com>
 #
 # This software may be used and distributed according to the terms of the
 # GNU Lesser General Public License version 3 or any later version.
 #
 
-__version__ = '2.0.5'
+__version__ = '2.1.0'
 
 from core import *
 from insim import *
