@@ -1,0 +1,27 @@
+- 2.0.5 (26th January 2012)
+
+  + Fixed bug in CarContact sub-packet
+
+- 2.0.4 (2nd July 2011)
+
+  + Updated to LFS 0.6B
+  + Now deals better with corrupt packets
+  + General tweaks
+
+- 2.0.3 (12th May 2011)
+
+  + Added support for LFS Z32
+
+- 2.0.2 (7th April 2011)
+
+  * Improved IS_REO packet so PLID now uses list consistantly
+  * Cleaned up InSim receive code
+  + Added EVT_TIMEOUT to OutGauge and OutSim
+
+- 2.0.1 (28th November 2010)
+
+  + Fixed bug with UDPPort when initialzing InSim
+
+- 2.0.0 (2nd October 2010)
+
+  = Initial release
