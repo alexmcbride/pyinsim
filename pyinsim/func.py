@@ -18,20 +18,20 @@ _COLOUR_REGEX = re.compile('\^[0-9]')
 _ENC_REGEX = re.compile('\^[LETBJCGHSK]')
 _ENC_COL_REGEX = re.compile('\^[LETBJCGHSK0-9]')
 
-def stripcols(str):
+def stripcols(str_):
     """Strip color codes (^3, ^7 etc..) from a string."""
-    return _COLOUR_REGEX.sub('', str)
+    return _COLOUR_REGEX.sub('', str_)
 
-def stripenc(str, cols=True):
+def stripenc(str_, cols=True):
     """Strip encoding markers (^L, ^E etc..) from a string. Note: a string 
     stripped of encoding markers cannot be converted to unicode."""
     if cols:
-        return _ENC_REGEX.sub('', str)        
-    return _ENC_COL_REGEX.sub('', str)
+        return _ENC_REGEX.sub('', str_)        
+    return _ENC_COL_REGEX.sub('', str_)
 
-def tounicode(str, cols=True, default='L'):
+def tounicode(str_, cols=True, default='L'):
     """Convert a LFS encoded string to unicode."""
-    return strmanip.toUnicode(str, default, cols)
+    return strmanip.toUnicode(str_, default, cols)
 
 def fromunicode(ustr, default='L'):
     """Convert a uncode string to a LFS encoded string."""

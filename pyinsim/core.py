@@ -50,7 +50,9 @@ _PACKET_MAP = {insim_.ISP_ISI: insim_.IS_ISI, insim_.ISP_VER: insim_.IS_VER, ins
                insim_.IRP_SEL: insim_.IR_SEL, insim_.IRP_ERR: insim_.IR_ERR, insim_.IRP_ARQ: insim_.IR_ARQ,
                insim_.IRP_ARP: insim_.IR_ARP, insim_.ISP_CON: insim_.IS_CON, insim_.ISP_ACR: insim_.IS_ACR,
                insim_.ISP_PLC: insim_.IS_PLC, insim_.ISP_HLV: insim_.IS_HLV, insim_.ISP_OBH: insim_.IS_OBH,
-               insim_.ISP_AXM: insim_.IS_AXM}
+               insim_.ISP_AXM: insim_.IS_AXM, insim_.ISP_HCP: insim_.IS_HCP, insim_.ISP_NCI: insim_.IS_NCI,
+               insim_.ISP_JRR: insim_.IS_JRR}
+
 
 # Event constants.
 EVT_INIT = 256
@@ -160,14 +162,14 @@ def outsim(host='127.0.0.1', port=30000, callback=None, timeout=30.0, name='loca
         An initialized OutSim host.
     
     """    
-    outsim = _OutSim(name, timeout)
-    outsim._connect(host, port)
+    outsim_ = _OutSim(name, timeout)
+    outsim_._connect(host, port)
     if callback:
-        outsim.bind(EVT_OUTSIM, callback)
-    return outsim
+        outsim_.bind(EVT_OUTSIM, callback)
+    return outsim_
 
     
-def packet(type, **kwargs):
+def packet(type_, **kwargs):
     """Create a packet object.
     
     Args:
@@ -178,7 +180,7 @@ def packet(type, **kwargs):
         The packet object.
     
     """
-    cls = _PACKET_MAP.get(type)
+    cls = _PACKET_MAP.get(type_)
     if cls:
         return cls(**kwargs)
     return None
@@ -405,7 +407,7 @@ class _InSim(_Binding):
         self._tcp.close()
         self._udp.close()
         
-    def send(self, type, **kwargs):
+    def send(self, type_, **kwargs):
         """Send a packet to InSim.
         
         Args:
@@ -416,7 +418,7 @@ class _InSim(_Binding):
             The packet that was sent.
         
         """
-        packet = _PACKET_MAP[type](**kwargs)
+        packet = _PACKET_MAP[type_](**kwargs)
         self._tcp.send(packet.pack())
         return packet
         
@@ -489,13 +491,13 @@ class _InSim(_Binding):
             
         # Handle packet event.
         bound = self._callbacks.get(ptype)
-        all = self._callbacks.get(EVT_ALL)
-        if bound or all:
+        all_ = self._callbacks.get(EVT_ALL)
+        if bound or all_:
             packet = _PACKET_MAP[ptype]().unpack(data)
             if bound:
                 [c(self, packet) for c in bound]
-            if all:
-                [c(self, packet) for c in all]            
+            if all_:
+                [c(self, packet) for c in all_]            
             
             
 class _OutSim(_Binding):
