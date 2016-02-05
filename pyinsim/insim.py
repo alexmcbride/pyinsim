@@ -11,7 +11,7 @@ import math
 
 __all__ = ['BFN_CLEAR', 'BFN_DEL_BTN', 'BFN_REQUEST', 'BFN_USER_CLEAR', 'CAR_ALL', 'CAR_BF1', 'CAR_FBM', 'CAR_FO8', 'CAR_FOX', 'CAR_FXO', 'CAR_FXR', 'CAR_FZ5', 'CAR_FZR', 'CAR_LX4', 'CAR_LX6', 'CAR_MRT', 'CAR_NONE', 'CAR_RAC', 'CAR_RB4', 'CAR_UF1', 'CAR_UFR', 'CAR_XFG', 'CAR_XFR', 'CAR_XRG', 'CAR_XRR', 'CAR_XRT', 'CCI_BLUE', 'CCI_FIRST', 'CCI_LAG', 'CCI_LAST', 'CCI_YELLOW', 'CONF_CONFIRMED', 'CONF_DID_NOT_PIT', 'CONF_DISQ', 'CONF_MENTIONED', 'CONF_PENALTY_30', 'CONF_PENALTY_45', 'CONF_PENALTY_DT', 'CONF_PENALTY_SG', 'CONF_TIME', 'CarContOBJ', 'CarContact', 'CompCar', 'DL_ABS', 'DL_BATTERY', 'DL_FULLBEAM', 'DL_HANDBRAKE', 'DL_NUM', 'DL_OILWARN', 'DL_PITSPEED', 'DL_SHIFT', 'DL_SIGNAL_ANY', 'DL_SIGNAL_L', 'DL_SIGNAL_R', 'DL_SPARE', 'DL_TC', 'HInfo', 'HOSTF_CAN_RESET', 'HOSTF_CAN_SELECT', 'HOSTF_CAN_VOTE', 'HOSTF_CRUISE', 'HOSTF_FCV', 'HOSTF_MID_RACE', 'HOSTF_MUST_PIT', 'HOS_FIRST', 'HOS_LAST', 'HOS_LICENSED', 'HOS_S1', 'HOS_S2', 'HOS_SPECPASS', 'INSIM_VERSION', 'INST_ALWAYS_ON', 'IRP_ARP', 'IRP_ARQ', 'IRP_ERR', 'IRP_HLR', 'IRP_HOS', 'IRP_SEL', 'IR_ARP', 'IR_ARQ', 'IR_ERR', 'IR_ERR_ADMIN', 'IR_ERR_HOSTNAME', 'IR_ERR_NOSPEC', 'IR_ERR_PACKET', 'IR_ERR_PACKET2', 'IR_ERR_SPEC', 'IR_HLR', 'IR_HOS', 'IR_SEL', 'ISB_C1', 'ISB_C2', 'ISB_C4', 'ISB_CLICK', 'ISB_CTRL', 'ISB_DARK', 'ISB_LEFT', 'ISB_LIGHT', 'ISB_LMB', 'ISB_RIGHT', 'ISB_RMB', 'ISB_SHIFT', 'ISF_AXM_EDIT', 'ISF_AXM_LOAD', 'ISF_CON', 'ISF_HLV', 'ISF_LOCAL', 'ISF_MCI', 'ISF_MSO_COLS', 'ISF_NLP', 'ISF_OBH', 'ISF_RES_0', 'ISF_RES_1', 'ISP_ACR', 'ISP_AXI', 'ISP_AXM', 'ISP_AXO', 'ISP_BFN', 'ISP_BTC', 'ISP_BTN', 'ISP_BTT', 'ISP_CCH', 'ISP_CNL', 'ISP_CON', 'ISP_CPP', 'ISP_CPR', 'ISP_CRS', 'ISP_FIN', 'ISP_FLG', 'ISP_HLV', 'ISP_III', 'ISP_ISI', 'ISP_ISM', 'ISP_LAP', 'ISP_MCI', 'ISP_MOD', 'ISP_MSL', 'ISP_MSO', 'ISP_MST', 'ISP_MSX', 'ISP_MTC', 'ISP_NCN', 'ISP_NLP', 'ISP_NONE', 'ISP_NPL', 'ISP_OBH', 'ISP_PEN', 'ISP_PFL', 'ISP_PIT', 'ISP_PLA', 'ISP_PLC', 'ISP_PLL', 'ISP_PLP', 'ISP_PSF', 'ISP_REO', 'ISP_RES', 'ISP_RIP', 'ISP_RST', 'ISP_SCC', 'ISP_SCH', 'ISP_SFP', 'ISP_SMALL', 'ISP_SPX', 'ISP_SSH', 'ISP_STA', 'ISP_TINY', 'ISP_TOC', 'ISP_VER', 'ISP_VTN', 'ISS_16', 'ISS_FRONT_END', 'ISS_GAME', 'ISS_MPSPEEDUP', 'ISS_MULTI', 'ISS_PAUSED', 'ISS_REPLAY', 'ISS_SHIFTU', 'ISS_SHIFTU_FOLLOW', 'ISS_SHIFTU_NO_OPT', 'ISS_SHOW_2D', 'ISS_SOUND_MUTE', 'ISS_VIEW_OVERRIDE', 'ISS_VISIBLE', 'ISS_WINDOWED', 'IS_ACR', 'IS_AXI', 'IS_AXM', 'IS_AXO', 'IS_BFN', 'IS_BTC', 'IS_BTN', 'IS_BTT', 'IS_CCH', 'IS_CNL', 'IS_CON', 'IS_CPP', 'IS_CPR', 'IS_CRS', 'IS_FIN', 'IS_FLG', 'IS_HLV', 'IS_III', 'IS_ISI', 'IS_ISM', 'IS_LAP', 'IS_MCI', 'IS_MOD', 'IS_MSL', 'IS_MSO', 'IS_MST', 'IS_MSX', 'IS_MTC', 'IS_NCN', 'IS_NLP', 'IS_NPL', 'IS_OBH', 'IS_PEN', 'IS_PFL', 'IS_PIT', 'IS_PLA', 'IS_PLC', 'IS_PLL', 'IS_PLP', 'IS_PSF', 'IS_REO', 'IS_RES', 'IS_RIP', 'IS_RST', 'IS_SCC', 'IS_SCH', 'IS_SFP', 'IS_SMALL', 'IS_SPX', 'IS_SSH', 'IS_STA', 'IS_TINY', 'IS_TOC', 'IS_VER', 'IS_VTN', 'LEAVR_BANNED', 'LEAVR_DISCO', 'LEAVR_KICKED', 'LEAVR_LOSTCONN', 'LEAVR_SECURITY', 'LEAVR_TIMEOUT', 'MSO_O', 'MSO_PREFIX', 'MSO_SYSTEM', 'MSO_USER', 'NodeLap', 'OBH_CAN_MOVE', 'OBH_LAYOUT', 'OBH_ON_SPOT', 'OBH_WAS_MOVING', 'OG_BAR', 'OG_CTRL', 'OG_KM', 'OG_SHIFT', 'OG_TURBO', 'ObjectInfo', 'OutGaugePack', 'OutSimPack', 'PENALTY_30', 'PENALTY_45', 'PENALTY_DT', 'PENALTY_DT_VALID', 'PENALTY_NONE', 'PENALTY_SG', 'PENALTY_SG_VALID', 'PENR_ADMIN', 'PENR_FALSE_START', 'PENR_SPEEDING', 'PENR_STOP_LATE', 'PENR_STOP_SHORT', 'PENR_UNKNOWN', 'PENR_WRONG_WAY', 'PIF_AUTOCLUTCH', 'PIF_AUTOGEARS', 'PIF_AXIS_CLUTCH', 'PIF_CUSTOM_VIEW', 'PIF_HELP_B', 'PIF_INPITS', 'PIF_KB_NO_HELP', 'PIF_KB_STABILISED', 'PIF_MOUSE', 'PIF_RESERVED_2', 'PIF_RESERVED_32', 'PIF_RESERVED_4', 'PIF_SHIFTER', 'PIF_SWAPSIDE', 'PITLANE_DT', 'PITLANE_ENTER', 'PITLANE_EXIT', 'PITLANE_NO_PURPOSE', 'PITLANE_SG', 'PMO_ADD_OBJECTS', 'PMO_CLEAR_ALL', 'PMO_DEL_OBJECTS', 'PMO_LOADING_FILE', 'PSE_BODY_MAJOR', 'PSE_BODY_MINOR', 'PSE_FR_DAM', 'PSE_FR_WHL', 'PSE_LE_FR_DAM', 'PSE_LE_FR_WHL', 'PSE_LE_RE_DAM', 'PSE_LE_RE_WHL', 'PSE_NOTHING', 'PSE_NUM', 'PSE_REFUEL', 'PSE_RE_DAM', 'PSE_RE_WHL', 'PSE_RI_FR_DAM', 'PSE_RI_FR_WHL', 'PSE_RI_RE_DAM', 'PSE_RI_RE_WHL', 'PSE_SETUP', 'PSE_STOP', 'RIPOPT_FULL_PHYS', 'RIPOPT_LOOP', 'RIPOPT_SKINS', 'RIP_ALREADY', 'RIP_CORRUPTED', 'RIP_DEDICATED', 'RIP_DEST_OOB', 'RIP_NOT_FOUND', 'RIP_NOT_REPLAY', 'RIP_OK', 'RIP_OOS', 'RIP_UNKNOWN', 'RIP_UNLOADABLE', 'RIP_USER', 'RIP_WRONG_MODE', 'SETF_ABS_ENABLE', 'SETF_SYMM_WHEELS', 'SETF_TC_ENABLE', 'SMALL_NLI', 'SMALL_NONE', 'SMALL_RTP', 'SMALL_SSG', 'SMALL_SSP', 'SMALL_STP', 'SMALL_TMS', 'SMALL_VTA', 'SND_ERROR', 'SND_INVALIDKEY', 'SND_MESSAGE', 'SND_SILENT', 'SND_SYSMESSAGE', 'SSH_CORRUPTED', 'SSH_DEDICATED', 'SSH_NO_SAVE', 'SSH_OK', 'TINY_AXC', 'TINY_AXI', 'TINY_CLOSE', 'TINY_CLR', 'TINY_GTH', 'TINY_ISM', 'TINY_MCI', 'TINY_MPE', 'TINY_NCN', 'TINY_NLP', 'TINY_NONE', 'TINY_NPL', 'TINY_PING', 'TINY_REN', 'TINY_REO', 'TINY_REPLY', 'TINY_RES', 'TINY_RIP', 'TINY_RST', 'TINY_SCP', 'TINY_SST', 'TINY_VER', 'TINY_VTC', 'TYRE_HYBRID', 'TYRE_KNOBBLY', 'TYRE_NOT_CHANGED', 'TYRE_R1', 'TYRE_R2', 'TYRE_R3', 'TYRE_R4', 'TYRE_ROAD_NORMAL', 'TYRE_ROAD_SUPER', 'VIEW_ANOTHER', 'VIEW_CAM', 'VIEW_CUSTOM', 'VIEW_DRIVER', 'VIEW_FOLLOW', 'VIEW_HELI', 'VOTE_END', 'VOTE_NONE', 'VOTE_QUALIFY', 'VOTE_RESTART']
 
-INSIM_VERSION = 4
+INSIM_VERSION = 7
 MAX_PLAYERS = 40
 
 
@@ -72,6 +72,9 @@ ISP_HLV = 52
 ISP_PLC = 53
 ISP_AXM = 54
 ISP_ACR = 55
+ISP_HCP = 56
+ISP_NCI = 57
+ISP_JRR = 58 
 
 # Relay packets.
 IRP_ARQ = 250
@@ -106,6 +109,7 @@ TINY_AXI = 20
 TINY_AXC = 21
 TINY_RIP = 22
 TINY_NCI = 23
+TINY_ALC = 24
 
 # Enum for IS_SMALL sub-type
 SMALL_NONE = 0
@@ -116,6 +120,7 @@ SMALL_TMS = 4
 SMALL_STP = 5
 SMALL_RTP = 6
 SMALL_NLI = 7
+SMALL_ALC = 8
 
 # Bit flags for ISI Flags
 ISF_RES_0 = 1
@@ -129,6 +134,7 @@ ISF_OBH = 128
 ISF_HLV = 256
 ISF_AXM_LOAD = 512
 ISF_AXM_EDIT = 1024
+ISF_REQ_JOIN = 2048
 
 # Enum for IS_MSO UserType
 MSO_SYSTEM = 0
@@ -339,7 +345,6 @@ SETF_SYMM_WHEELS = 1
 SETF_TC_ENABLE = 2
 SETF_ABS_ENABLE = 4
 
-
 # Languages
 LFS_ENGLISH = 0
 LFS_DEUTSCH = 1
@@ -380,8 +385,8 @@ LFS_INDONESIAN = 35
 LFS_ROMANIAN = 36
 
 
-def _eat_null_chars(str):
-    return str.rstrip('\x00')
+def _eat_null_chars(str_):
+    return str_.rstrip('\x00')
 
     
 class IS_ISI(object):
@@ -408,7 +413,7 @@ class IS_ISI(object):
         self.Zero = 0
         self.UDPPort = UDPPort
         self.Flags = Flags
-        self.Sp0 = 0
+        self.InSimVer = INSIM_VERSION
         self.Prefix = Prefix
         self.Interval = Interval
         self.Admin = Admin
@@ -420,9 +425,9 @@ class IS_VER(object):
     """VERsion. 
 
     """    
-    pack_s = struct.Struct('4B7sx5sxH')
+    pack_s = struct.Struct('4B7sx5sxBB')
     def unpack(self, data):
-        self.Size, self.Type, self.ReqI, self.Zero, self.Version, self.Product, self.InSimVer = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.Zero, self.Version, self.Product, self.InSimVer, self.Spare = self.pack_s.unpack(data)
         self.Product = _eat_null_chars(self.Product)
         self.Version = _eat_null_chars(self.Version)
         return self
@@ -617,9 +622,10 @@ class IS_MSO(object):
     """MSg Out - system messages and user messages
 
     """
-    pack_s = struct.Struct('8B127sx')
+    pack_s = struct.Struct('8B')
     def unpack(self, data):
-        self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.PLID, self.UserType, self.TextStart, self.Msg = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.PLID, self.UserType, self.TextStart = self.pack_s.unpack(data[:8])
+        self.Msg = struct.unpack('%dsx' % self.Size - 9, data[8:])
         self.Msg = _eat_null_chars(self.Msg)
         return self
 
@@ -627,9 +633,10 @@ class IS_III(object):
     """InsIm Info - /i message from user to host's InSim
 
     """
-    pack_s = struct.Struct('8B63sx')
+    pack_s = struct.Struct('8B')
     def unpack(self, data):
-        self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.PLID, self.Sp2, self.Sp3, self.Msg = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.PLID, self.Sp2, self.Sp3 = self.pack_s.unpack(data[:8])
+        self.Msg = struct.unpack('%dsx' % self.Size - 9, data[8:])
         self.Msg = _eat_null_chars(self.Msg)
         return self
 
@@ -1042,15 +1049,16 @@ class IS_BFN(object):
 
     """
     pack_s = struct.Struct('8B')
-    def __init__(self, ReqI=0, SubT=0, UCID=0, ClickID=0, Inst=0):
+    def __init__(self, ReqI=0, SubT=0, UCID=0, ClickID=0, MaxClick=0, Inst=0):
         """Initialise a new IS_BFN packet.
 
         Args:
-            ReqI    : 0
-            SubT    : subtype, from ``BFN_*`` enumeration
-            UCID    : connection to send to or from (0 = local / 255 = all)
-            ClickID : ID of button to delete (if ``SubT`` is ``BFN_DEL_BTN``)
-            Inst    : used internally by InSim
+            ReqI     : 0
+            SubT     : subtype, from ``BFN_*`` enumeration
+            UCID     : connection to send to or from (0 = local / 255 = all)
+            ClickID  : ID of button to delete (if ``SubT`` is ``BFN_DEL_BTN``)
+            MaxClick : ID of last button to delete in range of buttons
+            Inst     : used internally by InSim
 
         """
         self.Size = 8
@@ -1059,12 +1067,12 @@ class IS_BFN(object):
         self.SubT = SubT
         self.UCID = UCID
         self.ClickID = ClickID
+        self.MaxClick = MaxClick
         self.Inst = Inst
-        self.Sp3 = 0
     def pack(self):
-        return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.SubT, self.UCID, self.ClickID, self.Inst, self.Sp3)
+        return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.SubT, self.UCID, self.ClickID, self.MaxClick, self.Inst)
     def unpack(self, data):
-        self.Size, self.Type, self.ReqI, self.SubT, self.UCID, self.ClickID, self.Inst, self.Sp3 = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.SubT, self.UCID, self.ClickID, self.MaxClick, self.Inst = self.pack_s.unpack(data)
         return self
 
 class IS_AXI(object):
@@ -1277,9 +1285,10 @@ class IS_AXM(object):
         return self
 
 class IS_ACR(object):
-    pack_s = struct.Struct('8B63sx')
+    pack_s = struct.Struct('8B')
     def unpack(self, data):
-        self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.Admin, self.Result, self.Sp3, self.Text = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.Admin, self.Result, self.Sp3 = self.pack_s.unpack(data[:8])
+        self.Text = struct.unpack('%dsx' % self.Size - 9, data[8:])
         self.Text = _eat_null_chars(self.Text)
         return self
 
@@ -1321,6 +1330,20 @@ class IS_PLC(object):
     def pack(self):
         return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.Sp1, self.Sp2, self.Sp3, self.Cars)
 
+JRR_REJECT = 0
+JRR_SPAWN = 1
+JRR_2 = 2
+JRR_3 = 3
+JRR_RESET = 4
+JRR_RESET_NO_REPAIR = 5
+JRR_6 = 6
+JRR_7 = 7
+
+class IS_JRR(object):
+    pack_s = struct.Struct('8B2h4B')
+    def unpack(self, data):
+        self.Size, self.Type, self.ReqI, self.PLID, self.UCID, self.JRRAction, self.Sp2, self.Sp3, self.X, self.Y, self.Zbyte, self.Flags, self.Index, self.Heading = self.pack_s.unpack(data)
+        return self
     
 # InSim Relay
 
