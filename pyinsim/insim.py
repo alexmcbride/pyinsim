@@ -76,7 +76,7 @@ ISP_AXM = 54
 ISP_ACR = 55
 ISP_HCP = 56
 ISP_NCI = 57
-ISP_JRR = 58 
+ISP_JRR = 58
 
 # Relay packets.
 IRP_ARQ = 250
@@ -390,11 +390,11 @@ LFS_ROMANIAN = 36
 def _eat_null_chars(str_):
     return str_.rstrip('\x00')
 
-    
+
 class IS_ISI(object):
     """InSim Init - packet to initialise the InSim system.
 
-    """    
+    """
     pack_s = struct.Struct('4B2HBcH15sx15sx')
     def __init__(self, ReqI=0, UDPPort=0, Flags=0, Prefix='\x00', Interval=0, Admin='', IName='pyinsim'):
         """Create a new IS_ISI packet.
@@ -408,7 +408,7 @@ class IS_ISI(object):
             Admin    : Admin password (if set in LFS)
             IName    : A short name for your program
 
-        """        
+        """
         self.Size = 44
         self.Type = ISP_ISI
         self.ReqI = ReqI
@@ -421,12 +421,12 @@ class IS_ISI(object):
         self.Admin = Admin
         self.IName = IName
     def pack(self):
-        return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.Zero, self.UDPPort, self.Flags, self.Sp0, self.Prefix, self.Interval, self.Admin, self.IName)
+        return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.Zero, self.UDPPort, self.Flags, self.InSimVer, self.Prefix, self.Interval, self.Admin, self.IName)
 
 class IS_VER(object):
-    """VERsion. 
+    """VERsion.
 
-    """    
+    """
     pack_s = struct.Struct('4B7sx5sxBB')
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.Zero, self.Version, self.Product, self.InSimVer, self.Spare = self.pack_s.unpack(data)
@@ -437,7 +437,7 @@ class IS_VER(object):
 class IS_TINY(object):
     """General purpose packet.
 
-    """    
+    """
     pack_s = struct.Struct('4B')
     def __init__(self, ReqI=0, SubT=TINY_NONE):
         """Initialise a new IS_TINY packet.
@@ -446,7 +446,7 @@ class IS_TINY(object):
             ReqI : zero (0) unless in response to a request.
             SubT : subtype from ``TINY_*`` enumeration (e.g. ``TINY_REN``)
 
-        """        
+        """
         self.Size = 4
         self.Type = ISP_TINY
         self.ReqI = ReqI
@@ -460,7 +460,7 @@ class IS_TINY(object):
 class IS_SMALL(object):
     """General purpose packet.
 
-    """    
+    """
     pack_s = struct.Struct('4BI')
     def __init__(self, ReqI=0, SubT=SMALL_NONE, UVal=0):
         """Initialise a new IS_SMALL packet.
@@ -470,7 +470,7 @@ class IS_SMALL(object):
             SubT : subtype from ``SMALL_*`` enumeration (e.g. ``SMALL_SSP``)
             UVal : value (e.g. for ``SMALL_SSP`` this would be the OutSim packet rate)
 
-        """        
+        """
         self.Size = 8
         self.Type = ISP_SMALL
         self.ReqI = ReqI
@@ -481,12 +481,12 @@ class IS_SMALL(object):
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.SubT, self.UVal = self.pack_s.unpack(data)
         return self
-    
+
 class IS_STA(object):
     """STAte packet, sent whenever the data in the packet changes. To request
     this packet send a ``IS_TINY`` with a ``ReqI`` of non-zero and a ``SubT`` of ``TINY_STA``.
 
-    """    
+    """
     pack_s = struct.Struct('4BfH10B5sx2B')
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.Zero, self.ReplaySpeed, self.Flags, self.InGameCam, self.ViewPLID, self.NumP, self.NumConns, self.NumFinished, self.RaceInProg, self.QualMins, self.RaceLaps, self.Spare2, self.Spare3, self.Track, self.Weather, self.Wind = self.pack_s.unpack(data)
@@ -930,7 +930,7 @@ class IS_REO(object):
     """
     pack_s = struct.Struct('4B')
     def __init__(self, ReqI=0, PLID=[]):
-        """Initialise a new IS_REO packet. 
+        """Initialise a new IS_REO packet.
 
         Args:
             ReqI : 0 unless this is a reply to an ``TINY_REO`` request
@@ -993,7 +993,7 @@ class CompCar(object):
 
         """
         self.Node, self.Lap, self.PLID, self.Position, self.Info, self.Sp3, self.X, self.Y, self.Z, self.Speed, self.Direction, self.Heading, self.AngVel = self.pack_s.unpack(data[index:index+28])
-        
+
 class IS_MSX(object):
     """MSg eXtended - like ``IS_MST`` but longer (not for commands)
 
@@ -1005,7 +1005,7 @@ class IS_MSX(object):
         Args:
             ReqI : 0
             Msg  : last byte must be zero
-        
+
         """
         self.Size = 100
         self.Type = ISP_MSX
@@ -1219,19 +1219,19 @@ class IS_SSH(object):
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.Error, self.Sp0, self.Sp1, self.Sp2, self.Sp3, self.BMP = self.pack_s.unpack(data)
         self.BMP = _eat_null_chars(self.BMP)
-        return self 
-    
+        return self
+
 class CarContact(object):
     """Info about one car in a contact - two of these in the IS_CON
-        
+
     """
     pack_s = struct.Struct('3Bb6b2B2h')
     def __init__(self, data):
         self.PLID, self.Info, self.Sp2, self.Steer, self.ThrBrk, self.CluHan, self.GearSp, self.Speed, self.Direction, self.Heading, self.AccelF, self.AccelR, self.X, self.Y = self.pack_s.unpack(data)
-    
+
 class IS_CON(object):
     """CONtact - between two cars (A and B are sorted by PLID)
-    
+
     """
     pack_s = struct.Struct('4B2H')
     def unpack(self, data):
@@ -1239,19 +1239,19 @@ class IS_CON(object):
         self.A = CarContact(data[8:24])
         self.B = CarContact(data[24:])
         return self
-        
+
 class CarContOBJ(object):
     def __init__(self):
         self.Direction = 0
         self.Heading = 0
         self.Speed = 0
         self.Sp2 = 0
-        self.X = 0      
+        self.X = 0
         self.Y = 0
 
-OBH_LAYOUT = 1 
-OBH_CAN_MOVE = 2      
-OBH_WAS_MOVING = 4       
+OBH_LAYOUT = 1
+OBH_CAN_MOVE = 2
+OBH_WAS_MOVING = 4
 OBH_ON_SPOT = 8
 
 class IS_OBH(object):
@@ -1260,24 +1260,24 @@ class IS_OBH(object):
         self.C = CarContOBJ()
         self.Size, self.Type, self.ReqI, self.PLID, self.SpClose, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y, self.X, self.Y, self.Sp0, self.Sp1, self.Index, self.OBHFlags = self.pack_s.unpack(data)
         return self
-    
+
 class IS_HLV(object):
     pack_s = struct.Struct('6BH4B2h')
     def unpack(self, data):
         self.C = CarContOBJ()
         self.Size, self.Type, self.ReqI, self.PLID, self.HLVC, self.Sp1, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y = self.pack_s.unpack(data)
         return self
-    
+
 class ObjectInfo(object):
     pack_s = struct.Struct('2h4B')
     def __init__(self, data, index):
         self.X, self.Y, self.Zbyte, self.Flags, self.Index, self.Heading = self.pack_s.unpack(data[index:index+8])
-        
+
 PMO_LOADING_FILE = 0,
-PMO_ADD_OBJECTS = 1, 
+PMO_ADD_OBJECTS = 1,
 PMO_DEL_OBJECTS = 2,
 PMO_CLEAR_ALL = 3,
-        
+
 class IS_AXM(object):
     pack_s = struct.Struct('8B')
     def unpack(self, data):
@@ -1346,7 +1346,7 @@ class IS_JRR(object):
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.PLID, self.UCID, self.JRRAction, self.Sp2, self.Sp3, self.X, self.Y, self.Zbyte, self.Flags, self.Index, self.Heading = self.pack_s.unpack(data)
         return self
-    
+
 class CarHCP(object):
     pack_s = struct.Struct('2B')
     def __init__(self, H_Mass=0, H_TRes=0):
@@ -1354,7 +1354,7 @@ class CarHCP(object):
         self.H_TRes = H_TRes
     def pack(self):
         return self.pack_s.pack(self.H_Mass, self.H_TRes)
-    
+
 class IS_HCP(object):
     pack_s = struct.Struct('4B')
     def __init__(self, ReqI=0, Zero=0, Info=[]):
@@ -1366,7 +1366,7 @@ class IS_HCP(object):
     def pack(self):
         data = self.pack_s.pack(self.Size, self.Type, self.ReqI, self.Zero)
         return data + ''.join([info.pack() for info in self.Info])
-    
+
 # InSim Relay
 
 # Host flags
@@ -1399,16 +1399,16 @@ class IR_HOS(object):
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.NumHosts = self.pack_s.unpack(data[:4])
         data = data[4:]
-        self.Info = [HInfo(data, i) for i in xrange(0, self.NumHosts * 40, 40)]  
+        self.Info = [HInfo(data, i) for i in xrange(0, self.NumHosts * 40, 40)]
         return self
-            
+
 class HInfo(object):
     pack_s = struct.Struct('31sx5sx2B')
     def __init__(self, data, index):
-        self.HName, self.Track, self.Flags, self.NumConns = self.pack_s.unpack(data[index:index+40])   
+        self.HName, self.Track, self.Flags, self.NumConns = self.pack_s.unpack(data[index:index+40])
         self.HName = _eat_null_chars(self.HName)
         self.Track = _eat_null_chars(self.Track)
-        
+
 class IR_SEL(object):
     pack_s = struct.Struct('4B31sx15sx15sx')
     def __init__(self, ReqI=0, HName='', Admin='', Spec=''):
@@ -1421,7 +1421,7 @@ class IR_SEL(object):
         self.Spec = Spec
     def pack(self):
         return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.Zero, self.HName, self.Admin, self.Spec)
-        
+
 class IR_ARQ(object):
     pack_s = struct.Struct('4B')
     def __init__(self, ReqI=0):
@@ -1437,14 +1437,14 @@ class IR_ARP(object):
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.Admin = self.pack_s.unpack(data)
         return self
-      
+
 class IR_ERR(object):
     pack_s = struct.Struct('4B'
 )
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.ErrNo = self.pack_s.unpack(data)
         return self
-        
+
 class OutSimPack(object):
     pack_s = struct.Struct('I12f3i')
     def __init__(self):
@@ -1462,7 +1462,7 @@ class OutSimPack(object):
         if len(data) == 68:
             self.ID = struct.unpack('i', data[64:])
         return self
-             
+
 # Bits for OutGaugePack Flags
 OG_SHIFT = 1
 OG_CTRL = 2
@@ -1483,11 +1483,11 @@ DL_OILWARN = 256
 DL_BATTERY = 512
 DL_ABS = 1024
 DL_SPARE = 2048
-DL_NUM= 4096             
-                    
+DL_NUM= 4096
+
 class OutGaugePack(object):
     pack_s = struct.Struct('I3sxH2B7f2I3f15sx15sx')
-    def __init__(self):      
+    def __init__(self):
         self.Time = 0
         self.Car = ''
         self.Flags = 0
@@ -1515,9 +1515,8 @@ class OutGaugePack(object):
         if len(data) == 96:
             self.ID = struct.unpack('i', data[92:])
         return self
-               
-               
+
+
 if __name__ == '__main__':
     pass
     #print [d for d in dir() if not d.startswith('_') and d not in ('struct', 'math')]
-        
