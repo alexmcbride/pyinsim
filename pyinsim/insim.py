@@ -627,7 +627,7 @@ class IS_MSO(object):
     pack_s = struct.Struct('8B')
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.PLID, self.UserType, self.TextStart = self.pack_s.unpack(data[:8])
-        self.Msg = struct.unpack('%dsx' % self.Size - 9, data[8:])
+        self.Msg = struct.unpack('%dsx' % int(self.Size - 9), data[8:])[0]
         self.Msg = _eat_null_chars(self.Msg)
         return self
 
