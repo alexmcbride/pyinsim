@@ -1702,7 +1702,7 @@ class CarContOBJ(object):
         self.Direction = 0
         self.Heading = 0
         self.Speed = 0
-        self.Sp2 = 0
+        self.Zbyte = 0
         self.X = 0
         self.Y = 0
 
@@ -1715,14 +1715,14 @@ class IS_OBH(object):
     pack_s = struct.Struct('4B2H4B2h2h4B')
     def unpack(self, data):
         self.C = CarContOBJ()
-        self.Size, self.Type, self.ReqI, self.PLID, self.SpClose, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y, self.X, self.Y, self.Sp0, self.Sp1, self.Index, self.OBHFlags = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.PLID, self.SpClose, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Zbyte, self.C.X, self.C.Y, self.X, self.Y, self.Zbyte, self.Sp1, self.Index, self.OBHFlags = self.pack_s.unpack(data)
         return self
 
 class IS_HLV(object):
     pack_s = struct.Struct('6BH4B2h')
     def unpack(self, data):
         self.C = CarContOBJ()
-        self.Size, self.Type, self.ReqI, self.PLID, self.HLVC, self.Sp1, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.PLID, self.HLVC, self.Sp1, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Zbyte, self.C.X, self.C.Y = self.pack_s.unpack(data)
         return self
 
 class ObjectInfo(object):
