@@ -182,6 +182,7 @@ __all__ = [
     'ISP_STA',
     'ISP_TINY',
     'ISP_TOC',
+    'ISP_UCO',
     'ISP_VER',
     'ISP_VTN',
     'ISS_16',
@@ -456,6 +457,10 @@ __all__ = [
     'TYRE_R4',
     'TYRE_ROAD_NORMAL',
     'TYRE_ROAD_SUPER',
+    'UCO_CIRCLE_ENTER',
+    'UCO_CIRCLE_LEAVE',
+    'UCO_CP_FWD',
+    'UCO_CP_REV',
     'VIEW_ANOTHER',
     'VIEW_CAM',
     'VIEW_CUSTOM',
@@ -534,6 +539,7 @@ ISP_ACR = 55
 ISP_HCP = 56
 ISP_NCI = 57
 ISP_JRR = 58
+ISP_UCO = 59
 
 # Relay packets.
 IRP_ARQ = 250
@@ -1724,6 +1730,19 @@ class IS_HLV(object):
         self.C = CarContOBJ()
         self.Size, self.Type, self.ReqI, self.PLID, self.HLVC, self.Sp1, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Zbyte, self.C.X, self.C.Y = self.pack_s.unpack(data)
         return self
+
+class IS_UCO(object):
+    pack_s = struct.Struct('8BI4B2h')
+    def unpack(self, data):
+        self.C = CarContOBJ() # 4B2h
+        self.Size, self.Type, self.ReqI, self.PLID, self.Sp0, self.UCOAction, self.Sp2, self.Sp3, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y = self.pack_s.unpack(data[:20])
+        self.Info = ObjectInfo(data[20:], 0)
+        return self
+
+UCO_CIRCLE_ENTER = 1,
+UCO_CIRCLE_LEAVE = 2,
+UCO_CP_FWD = 3,
+UCO_CP_REV = 4,
 
 class ObjectInfo(object):
     pack_s = struct.Struct('2h4B')
