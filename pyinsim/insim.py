@@ -10,6 +10,7 @@ import struct
 import math
 
 __all__ = [
+    'AXO_START_LIGHTS',
     'BFN_CLEAR',
     'BFN_DEL_BTN',
     'BFN_REQUEST',
@@ -161,6 +162,7 @@ __all__ = [
     'ISP_NONE',
     'ISP_NPL',
     'ISP_OBH',
+    'ISP_OCO',
     'ISP_PEN',
     'ISP_PFL',
     'ISP_PIT',
@@ -235,6 +237,7 @@ __all__ = [
     'IS_NLP',
     'IS_NPL',
     'IS_OBH',
+    'IS_OCO',
     'IS_PEN',
     'IS_PFL',
     'IS_PIT',
@@ -323,6 +326,14 @@ __all__ = [
     'OBH_LAYOUT',
     'OBH_ON_SPOT',
     'OBH_WAS_MOVING',
+    'OCO_ZERO',
+    'OCO_1',
+    'OCO_2',
+    'OCO_3',
+    'OCO_LIGHTS_RESET',
+    'OCO_LIGHTS_SET',
+    'OCO_LIGHTS_UNSET',
+    'OCO_INDEX_MAIN',
     'OG_BAR',
     'OG_CTRL',
     'OG_KM',
@@ -540,6 +551,7 @@ ISP_HCP = 56
 ISP_NCI = 57
 ISP_JRR = 58
 ISP_UCO = 59
+ISP_OCO = 60
 
 # Relay packets.
 IRP_ARQ = 250
@@ -849,6 +861,8 @@ LFS_UKRAINIAN = 34
 LFS_INDONESIAN = 35
 LFS_ROMANIAN = 36
 
+# Autocross Objects
+AXO_START_LIGHTS = 149
 
 def _eat_null_chars(str_):
     return str_.rstrip('\x00')
@@ -1743,6 +1757,56 @@ UCO_CIRCLE_ENTER = 1,
 UCO_CIRCLE_LEAVE = 2,
 UCO_CP_FWD = 3,
 UCO_CP_REV = 4,
+
+
+class IS_OCO(object):
+    """ Object COntrol
+
+    """
+    pack_s = struct.Struct('8B')
+    def __init__(self, OCOAction=0, Index=0, Identifier=0, Data=0):
+        """ Initialise a new IS_OCO packet
+        Args:
+            OCOAction   : values from OCO_*
+            Index       : specifies which lights you want to override:
+                          AXO_START_LIGHTS / OCO_INDEX_MAIN
+            Identifier  : identify particular start lights objects (0 to 63 or 255 = all)
+            Data        : specifies particular bulbs using the low 4 bits
+                    OCO_INDEX_MAIN:
+                        bit 0 (1) : red1
+                        bit 1 (2) : red2
+                        bit 2 (4) : red3
+                        bit 3 (8) : green
+                    AXO_START_LIGHTS:
+                        bit 0 (1) : red
+                        bit 1 (2) : amber
+                        bit 3 (8) : green
+
+        """
+        self.Size = 8
+        self.Type = ISP_OCO
+        self.ReqI = 0
+        self.Zero = 0
+        self.OCOAction = OCOAction
+        self.Index = Index
+        self.Identifier = Identifier
+        self.Data = Data
+    def pack(self):
+        return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.Zero, self.OCOAction, self.Index, self.Identifier, self.Data)
+    def unpack(self, data):
+        self.Size, self.Type, self.ReqI, self.Zero, self.OCOAction, self.Index, self.Identifier, self.Data = self.pack_s.unpack(data)
+        return self
+
+OCO_ZERO = 0            # reserved
+OCO_1 = 1
+OCO_2 = 2
+OCO_3 = 3
+OCO_LIGHTS_RESET = 4    # give up control of all lights
+OCO_LIGHTS_SET = 5      # use Data byte to set the bulbs
+OCO_LIGHTS_UNSET = 6    # give up control of the specified lights
+
+OCO_INDEX_MAIN = 240    # special value to override the main start light system
+
 
 class ObjectInfo(object):
     pack_s = struct.Struct('2h4B')
