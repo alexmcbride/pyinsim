@@ -184,6 +184,7 @@ __all__ = [
     'ISP_STA',
     'ISP_TINY',
     'ISP_TOC',
+    'ISP_TTC',
     'ISP_UCO',
     'ISP_VER',
     'ISP_VTN',
@@ -259,6 +260,7 @@ __all__ = [
     'IS_STA',
     'IS_TINY',
     'IS_TOC',
+    'IS_TTC',
     'IS_VER',
     'IS_VTN',
     'JRR_2',
@@ -376,6 +378,9 @@ __all__ = [
     'PITLANE_NO_PURPOSE',
     'PITLANE_SG',
     'PMO_ADD_OBJECTS',
+    'PMO_SELECTION',
+    'PMO_TINY_AXM',
+    'PMO_TTC_SEL',
     'PMO_CLEAR_ALL',
     'PMO_DEL_OBJECTS',
     'PMO_LOADING_FILE',
@@ -437,6 +442,7 @@ __all__ = [
     'TINY_ALC',
     'TINY_AXC',
     'TINY_AXI',
+    'TINY_AXM',
     'TINY_CLOSE',
     'TINY_CLR',
     'TINY_GTH',
@@ -552,6 +558,7 @@ ISP_NCI = 57
 ISP_JRR = 58
 ISP_UCO = 59
 ISP_OCO = 60
+ISP_TTC = 61
 
 # Relay packets.
 IRP_ARQ = 250
@@ -587,6 +594,7 @@ TINY_AXC = 21
 TINY_RIP = 22
 TINY_NCI = 23
 TINY_ALC = 24
+TINY_AXM = 25
 
 # Enum for IS_SMALL sub-type
 SMALL_NONE = 0
@@ -598,6 +606,11 @@ SMALL_STP = 5
 SMALL_RTP = 6
 SMALL_NLI = 7
 SMALL_ALC = 8
+
+# Fourth byte of IS_TTC
+TTC_NONE = 0
+TTC_SEL = 1
+
 
 # Bit flags for ISI Flags
 ISF_RES_0 = 1
@@ -958,6 +971,24 @@ class IS_SMALL(object):
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.SubT, self.UVal = self.pack_s.unpack(data)
         return self
+
+class IS_TTC(object):
+    """General purpose 8 byte packet (Target To Connection)
+
+    """
+    pack_s = struct.Struct('8B')
+    def __init__(self, ReqI=0, SubT=TTC_NONE, UCID=0, B1=0, B2=0, B3=0):
+        self.Size = 8
+        self.Type = ISP_SMALL
+        self.ReqI = ReqI
+        self.SubT = SubT    # From TTC_*
+        self.UCID = UCID    # connection's unique id (0 = local)
+        self.B1 = B1        # B1, B2, B3 may be used in various ways depending on SubT
+        self.B2 = B2
+        self.B3 = B3
+    def pack(self):
+        return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.SubT, self.UCID, self.B1, self.B2, self.B3)
+
 
 class IS_STA(object):
     """STAte packet, sent whenever the data in the packet changes. To request
@@ -1817,9 +1848,27 @@ PMO_LOADING_FILE = 0,
 PMO_ADD_OBJECTS = 1,
 PMO_DEL_OBJECTS = 2,
 PMO_CLEAR_ALL = 3,
+PMO_TINY_AXM = 4,
+PMO_TTC_SEL = 5,
+PMO_SELECTION = 6,
 
 class IS_AXM(object):
     pack_s = struct.Struct('8B')
+    def __init__(self, ReqI=0, NumO=0, UCID=0, PMOAction=0, PMOFlags=0, Sp3=0, Info=[]):
+        self.Size = 8
+        self.Type = ISP_OCO
+        self.ReqI = ReqI
+        self.NumO = NumO
+        self.UCID = UCID
+        self.PMOAction = PMOAction
+        self.PMOFlags = PMOFlags
+        self.Sp3 = Sp3
+        self.Info = Info
+    def pack(self):
+        data = self.pack_s.pack(self.Size + (self.NumO * 8), self.Type, self.ReqI, self.NumO, self.UCID, self.PMOAction, self.PMOFlags, self.Sp3)
+        for i in range(self.NumO):
+            data = data + self.Info[i].pack()
+        return data
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.NumO, self.UCID, self.PMOAction, self.PMOFlags, self.Sp3 = self.pack_s.unpack(data[:8])
         data = data[8:]
