@@ -178,6 +178,7 @@ __all__ = [
     'ISP_SCC',
     'ISP_SCH',
     'ISP_SFP',
+    'ISP_SLC',
     'ISP_SMALL',
     'ISP_SPX',
     'ISP_SSH',
@@ -254,6 +255,7 @@ __all__ = [
     'IS_SCC',
     'IS_SCH',
     'IS_SFP',
+    'IS_SLC',
     'IS_SMALL',
     'IS_SPX',
     'IS_SSH',
@@ -462,6 +464,7 @@ __all__ = [
     'TINY_RIP',
     'TINY_RST',
     'TINY_SCP',
+    'TINY_SLC',
     'TINY_SST',
     'TINY_VER',
     'TINY_VTC',
@@ -559,6 +562,7 @@ ISP_JRR = 58
 ISP_UCO = 59
 ISP_OCO = 60
 ISP_TTC = 61
+ISP_SLC = 62
 
 # Relay packets.
 IRP_ARQ = 250
@@ -595,6 +599,7 @@ TINY_RIP = 22
 TINY_NCI = 23
 TINY_ALC = 24
 TINY_AXM = 25
+TINY_SLC = 26
 
 # Enum for IS_SMALL sub-type
 SMALL_NONE = 0
@@ -1264,6 +1269,16 @@ class IS_NCI(object):
     pack_s = struct.Struct('8B2I')
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.UCID, self.Language, self.Sp1, self.Sp2, self.Sp3, self.UserID, self.IPAddress = self.pack_s.unpack(data)
+        return self
+
+class IS_SLC(object):
+    """SeLected Car - sent when a connection selects a car (empty if no car)
+
+    """
+    pack_s = struct.Struct('4B4s')
+    def unpack(self, data):
+        self.Size, self.Type, self.ReqI, self.UCID, self.CName = self.pack_s.unpack(data)
+        self.CName = _eat_null_chars(self.CName)
         return self
 
 class IS_CNL(object):
