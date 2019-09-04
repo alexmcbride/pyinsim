@@ -140,6 +140,7 @@ __all__ = [
     'ISP_CPP',
     'ISP_CPR',
     'ISP_CRS',
+    'ISP_CSC',
     'ISP_FIN',
     'ISP_FLG',
     'ISP_HCP',
@@ -218,6 +219,7 @@ __all__ = [
     'IS_CPP',
     'IS_CPR',
     'IS_CRS',
+    'IS_CSC',
     'IS_FIN',
     'IS_FLG',
     'IS_HCP',
@@ -563,6 +565,7 @@ ISP_UCO = 59
 ISP_OCO = 60
 ISP_TTC = 61
 ISP_SLC = 62
+ISP_CSC = 63
 
 # Relay packets.
 IRP_ARQ = 250
@@ -1804,6 +1807,15 @@ UCO_CIRCLE_LEAVE = 2,
 UCO_CP_FWD = 3,
 UCO_CP_REV = 4,
 
+class IS_CSC(object):
+    pack_s = struct.Struct('8BI4B2h')
+    def unpack(self, data):
+        self.C = CarContOBJ() # 4B2h
+        self.Size, self.Type, self.ReqI, self.PLID, self.Sp0, self.CSCAction, self.Sp2, self.Sp3, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y = self.pack_s.unpack(data)
+        return self
+
+CSC_STOP = 0
+CSC_START = 1
 
 class IS_OCO(object):
     """ Object COntrol

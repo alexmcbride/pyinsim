@@ -117,6 +117,7 @@ _PACKET_MAP = {
     insim_.ISP_OCO: insim_.IS_OCO,
     insim_.ISP_TTC: insim_.IS_TTC,
     insim_.ISP_SLC: insim_.IS_SLC,
+    insim_.ISP_CSC: insim_.IS_CSC,
 }
 
 
