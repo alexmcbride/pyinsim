@@ -426,6 +426,7 @@ __all__ = [
     'SETF_SYMM_WHEELS',
     'SETF_TC_ENABLE',
     'SMALL_ALC',
+    'SMALL_LCS',
     'SMALL_NLI',
     'SMALL_NONE',
     'SMALL_RTP',
@@ -614,6 +615,7 @@ SMALL_STP = 5
 SMALL_RTP = 6
 SMALL_NLI = 7
 SMALL_ALC = 8
+SMALL_LCS = 8
 
 # Fourth byte of IS_TTC
 TTC_NONE = 0
@@ -884,6 +886,20 @@ LFS_ROMANIAN = 36
 
 # Autocross Objects
 AXO_START_LIGHTS = 149
+
+# SMALL_LCS Flags
+LCS_SET_SIGNALS = 1		# bit 0
+LCS_SET_FLASH = 2		# bit 1
+LCS_SET_HEADLIGHTS = 4	# bit 2
+LCS_SET_HORN = 8		# bit 3
+LCS_SET_SIREN = 0x10	# bit 4
+
+LCS_Mask_Signals = 0x0300       # bits  8-9   (Switches & 0x0300) - Signal    (0 off / 1 left / 2 right / 3 hazard)
+LCS_Mask_Flash = 0x0400         # bit   10    (Switches & 0x0400) - Flash
+LCS_Mask_Headlights = 0x0800    # bit	11    (Switches & 0x0800) - Headlights
+LCS_Mask_Horn = 0x070000        # bits  16-18 (Switches & 0x070000) - Horn    (0 off / 1 to 5 horn type)
+LCS_Mask_Siren = 0x300000       # bits  20-21 (Switches & 0x300000) - Siren   (0 off / 1 fast / 2 slow)
+
 
 def _eat_null_chars(str_):
     return str_.rstrip('\x00')
