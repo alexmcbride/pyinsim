@@ -1908,10 +1908,10 @@ class IS_UCO(object):
         self.Info = ObjectInfo(data[20:], 0)
         return self
 
-UCO_CIRCLE_ENTER = 1,
-UCO_CIRCLE_LEAVE = 2,
-UCO_CP_FWD = 3,
-UCO_CP_REV = 4,
+UCO_CIRCLE_ENTER = 0
+UCO_CIRCLE_LEAVE = 1
+UCO_CP_FWD = 2
+UCO_CP_REV = 3
 
 class IS_CSC(object):
     pack_s = struct.Struct('8BI4B2h')
@@ -1978,15 +1978,15 @@ class ObjectInfo(object):
         self.X, self.Y, self.Zbyte, self.Flags, self.Index, self.Heading = self.pack_s.unpack(data[index:index+8])
 
 # PMOAction
-PMO_LOADING_FILE = 0,
-PMO_ADD_OBJECTS = 1,
-PMO_DEL_OBJECTS = 2,
-PMO_CLEAR_ALL = 3,
-PMO_TINY_AXM = 4,
-PMO_TTC_SEL = 5,
-PMO_SELECTION = 6,
-PMO_POSITION = 7,
-PMO_GET_Z = 8,
+PMO_LOADING_FILE = 0
+PMO_ADD_OBJECTS = 1
+PMO_DEL_OBJECTS = 2
+PMO_CLEAR_ALL = 3
+PMO_TINY_AXM = 4
+PMO_TTC_SEL = 5
+PMO_SELECTION = 6
+PMO_POSITION = 7
+PMO_GET_Z = 8
 
 # PMOFlags
 PMO_FILE_END = 1
