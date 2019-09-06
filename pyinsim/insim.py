@@ -383,7 +383,13 @@ __all__ = [
     'PITLANE_NO_PURPOSE',
     'PITLANE_SG',
     'PMO_ADD_OBJECTS',
+    'PMO_AVOID_CHECK',
+    'PMO_FILE_END',
+    'PMO_GET_Z',
+    'PMO_MOVE_MODIFY',
+    'PMO_POSITION',
     'PMO_SELECTION',
+    'PMO_SELECTION_REAL',
     'PMO_TINY_AXM',
     'PMO_TTC_SEL',
     'PMO_CLEAR_ALL',
@@ -499,7 +505,7 @@ __all__ = [
 
 
 
-INSIM_VERSION = 7
+INSIM_VERSION = 8
 MAX_PLAYERS = 40
 
 
@@ -1889,6 +1895,7 @@ class ObjectInfo(object):
     def __init__(self, data, index):
         self.X, self.Y, self.Zbyte, self.Flags, self.Index, self.Heading = self.pack_s.unpack(data[index:index+8])
 
+# PMOAction
 PMO_LOADING_FILE = 0,
 PMO_ADD_OBJECTS = 1,
 PMO_DEL_OBJECTS = 2,
@@ -1896,6 +1903,14 @@ PMO_CLEAR_ALL = 3,
 PMO_TINY_AXM = 4,
 PMO_TTC_SEL = 5,
 PMO_SELECTION = 6,
+PMO_POSITION = 7,
+PMO_GET_Z = 8,
+
+# PMOFlags
+PMO_FILE_END = 1
+PMO_MOVE_MODIFY = 2
+PMO_SELECTION_REAL = 4
+PMO_AVOID_CHECK = 8
 
 class IS_AXM(object):
     pack_s = struct.Struct('8B')
