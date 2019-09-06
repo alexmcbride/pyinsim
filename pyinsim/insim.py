@@ -42,6 +42,13 @@ __all__ = [
     'CCI_LAG',
     'CCI_LAST',
     'CCI_YELLOW',
+    'CIM_NORMAL',
+    'CIM_OPTIONS',
+    'CIM_HOST_OPTIONS',
+    'CIM_GARAGE',
+    'CIM_CAR_SELECT',
+    'CIM_TRACK_SELECT',
+    'CIM_SHIFTU',
     'CONF_CONFIRMED',
     'CONF_DID_NOT_PIT',
     'CONF_DISQ',
@@ -68,6 +75,18 @@ __all__ = [
     'DL_SIGNAL_R',
     'DL_SPARE',
     'DL_TC',
+    'FVM_PLAIN',
+    'FVM_BUTTONS',
+    'FVM_EDIT',
+    'GRG_INFO',
+    'GRG_COLOURS',
+    'GRG_BRAKE_TC',
+    'GRG_SUSP',
+    'GRG_STEER',
+    'GRG_DRIVE',
+    'GRG_TYRES',
+    'GRG_AERO',
+    'GRG_PASS',
     'HInfo',
     'HOSTF_CAN_RESET',
     'HOSTF_CAN_SELECT',
@@ -135,6 +154,7 @@ __all__ = [
     'ISP_BTN',
     'ISP_BTT',
     'ISP_CCH',
+    'ISP_CIM',
     'ISP_CNL',
     'ISP_CON',
     'ISP_CPP',
@@ -215,6 +235,7 @@ __all__ = [
     'IS_BTN',
     'IS_BTT',
     'IS_CCH',
+    'IS_CIM',
     'IS_CNL',
     'IS_CON',
     'IS_CPP',
@@ -323,12 +344,21 @@ __all__ = [
     'LFS_TRADITIONAL_CHINESE',
     'LFS_TURKISH',
     'LFS_UKRAINIAN',
+    'MARSH_IS_CP',
+    'MARSH_IS_AREA',
+    'MARSH_MARSHALL',
+    'MARSH_ROUTE',
     'MAX_PLAYERS',
     'MSO_O',
     'MSO_PREFIX',
     'MSO_SYSTEM',
     'MSO_USER',
     'NodeLap',
+    'NRM_NORMAL',
+    'NRM_WHEEL_TEMPS',
+    'NRM_WHEEL_DAMAGE',
+    'NRM_LIVE_SETTINGS',
+    'NRM_PIT_INSTRUCTIONS',
     'OBH_CAN_MOVE',
     'OBH_LAYOUT',
     'OBH_ON_SPOT',
@@ -578,6 +608,7 @@ ISP_OCO = 60
 ISP_TTC = 61
 ISP_SLC = 62
 ISP_CSC = 63
+ISP_CIM = 64
 
 # Relay packets.
 IRP_ARQ = 250
@@ -626,7 +657,7 @@ SMALL_STP = 5
 SMALL_RTP = 6
 SMALL_NLI = 7
 SMALL_ALC = 8
-SMALL_LCS = 8
+SMALL_LCS = 9
 
 # Fourth byte of IS_TTC
 TTC_NONE = 0
@@ -900,6 +931,10 @@ LFS_ROMANIAN = 36
 
 # Autocross Objects
 AXO_START_LIGHTS = 149
+MARSH_IS_CP = 252       # insim checkpoint
+MARSH_IS_AREA = 253     # insim circle
+MARSH_MARSHALL = 254    # restricted area
+MARSH_ROUTE	= 255       # route checker
 
 # SMALL_LCS Flags
 LCS_SET_SIGNALS = 1		# bit 0
@@ -1313,6 +1348,47 @@ class IS_SLC(object):
         self.Size, self.Type, self.ReqI, self.UCID, self.CName = self.pack_s.unpack(data)
         self.CName = _eat_null_chars(self.CName)
         return self
+
+class IS_CIM(object):
+    """Conn Interface Mode
+
+    """
+    pack_s = struct.Struct('8B')
+    def unpack(self, data):
+        self.Size, self.Type, self.ReqI, self.UCID, self.Mode, self.SubMode, self.SelType, self.Sp3 = self.pack_s.unpack(data)
+        return self
+
+# Mode identifiers
+CIM_NORMAL = 0          # not in a special mode
+CIM_OPTIONS = 1
+CIM_HOST_OPTIONS = 2
+CIM_GARAGE = 3
+CIM_CAR_SELECT = 4
+CIM_TRACK_SELECT = 5
+CIM_SHIFTU = 6          # free view mode
+
+# Submode identifiers for CIM_NORMAL
+NRM_NORMAL = 0
+NRM_WHEEL_TEMPS = 1         # F9
+NRM_WHEEL_DAMAGE = 2        # F10
+NRM_LIVE_SETTINGS = 3       # F11
+NRM_PIT_INSTRUCTIONS = 4    # F12
+
+# SubMode identifiers for CIM_GARAGE
+GRG_INFO = 1
+GRG_COLOURS = 2
+GRG_BRAKE_TC = 3
+GRG_SUSP = 4
+GRG_STEER = 5
+GRG_DRIVE = 6
+GRG_TYRES = 7
+GRG_AERO = 8
+GRG_PASS = 9
+
+# SubMode identifiers for CIM_SHIFTU
+FVM_PLAIN = 0   # no buttons displayed
+FVM_BUTTONS = 1 # buttons displayed (not editing)
+FVM_EDIT = 2    # edit mode
 
 class IS_CNL(object):
     """ConN Leave
