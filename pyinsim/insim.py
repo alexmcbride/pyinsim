@@ -478,6 +478,10 @@ __all__ = [
     'TINY_SST',
     'TINY_VER',
     'TINY_VTC',
+    'TTC_NONE',
+    'TTC_SEL',
+    'TTC_SEL_START',
+    'TTC_SEL_STOP',
     'TYRE_HYBRID',
     'TYRE_KNOBBLY',
     'TYRE_NOT_CHANGED',
@@ -627,6 +631,8 @@ SMALL_LCS = 8
 # Fourth byte of IS_TTC
 TTC_NONE = 0
 TTC_SEL = 1
+TTC_SEL_START = 2
+TTC_SEL_STOP = 3
 
 
 # Bit flags for ISI Flags
@@ -1011,7 +1017,7 @@ class IS_TTC(object):
     pack_s = struct.Struct('8B')
     def __init__(self, ReqI=0, SubT=TTC_NONE, UCID=0, B1=0, B2=0, B3=0):
         self.Size = 8
-        self.Type = ISP_SMALL
+        self.Type = ISP_TTC
         self.ReqI = ReqI
         self.SubT = SubT    # From TTC_*
         self.UCID = UCID    # connection's unique id (0 = local)
