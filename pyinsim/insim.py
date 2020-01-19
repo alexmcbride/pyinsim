@@ -9,11 +9,537 @@
 import struct
 import math
 
-__all__ = ['BFN_CLEAR', 'BFN_DEL_BTN', 'BFN_REQUEST', 'BFN_USER_CLEAR', 'CAR_ALL', 'CAR_BF1', 'CAR_FBM', 'CAR_FO8', 'CAR_FOX', 'CAR_FXO', 'CAR_FXR', 'CAR_FZ5', 'CAR_FZR', 'CAR_LX4', 'CAR_LX6', 'CAR_MRT', 'CAR_NONE', 'CAR_RAC', 'CAR_RB4', 'CAR_UF1', 'CAR_UFR', 'CAR_XFG', 'CAR_XFR', 'CAR_XRG', 'CAR_XRR', 'CAR_XRT', 'CCI_BLUE', 'CCI_FIRST', 'CCI_LAG', 'CCI_LAST', 'CCI_YELLOW', 'CONF_CONFIRMED', 'CONF_DID_NOT_PIT', 'CONF_DISQ', 'CONF_MENTIONED', 'CONF_PENALTY_30', 'CONF_PENALTY_45', 'CONF_PENALTY_DT', 'CONF_PENALTY_SG', 'CONF_TIME', 'CarContOBJ', 'CarContact', 'CarHCP', 'CompCar', 'DL_ABS', 'DL_BATTERY', 'DL_FULLBEAM', 'DL_HANDBRAKE', 'DL_NUM', 'DL_OILWARN', 'DL_PITSPEED', 'DL_SHIFT', 'DL_SIGNAL_ANY', 'DL_SIGNAL_L', 'DL_SIGNAL_R', 'DL_SPARE', 'DL_TC', 'HInfo', 'HOSTF_CAN_RESET', 'HOSTF_CAN_SELECT', 'HOSTF_CAN_VOTE', 'HOSTF_CRUISE', 'HOSTF_FCV', 'HOSTF_MID_RACE', 'HOSTF_MUST_PIT', 'HOS_FIRST', 'HOS_LAST', 'HOS_LICENSED', 'HOS_S1', 'HOS_S2', 'HOS_SPECPASS', 'INSIM_VERSION', 'INST_ALWAYS_ON', 'IRP_ARP', 'IRP_ARQ', 'IRP_ERR', 'IRP_HLR', 'IRP_HOS', 'IRP_SEL', 'IR_ARP', 'IR_ARQ', 'IR_ERR', 'IR_ERR_ADMIN', 'IR_ERR_HOSTNAME', 'IR_ERR_NOSPEC', 'IR_ERR_PACKET', 'IR_ERR_PACKET2', 'IR_ERR_SPEC', 'IR_HLR', 'IR_HOS', 'IR_SEL', 'ISB_C1', 'ISB_C2', 'ISB_C4', 'ISB_CLICK', 'ISB_CTRL', 'ISB_DARK', 'ISB_LEFT', 'ISB_LIGHT', 'ISB_LMB', 'ISB_RIGHT', 'ISB_RMB', 'ISB_SHIFT', 'ISF_AXM_EDIT', 'ISF_AXM_LOAD', 'ISF_CON', 'ISF_HLV', 'ISF_LOCAL', 'ISF_MCI', 'ISF_MSO_COLS', 'ISF_NLP', 'ISF_OBH', 'ISF_REQ_JOIN', 'ISF_RES_0', 'ISF_RES_1', 'ISP_ACR', 'ISP_AXI', 'ISP_AXM', 'ISP_AXO', 'ISP_BFN', 'ISP_BTC', 'ISP_BTN', 'ISP_BTT', 'ISP_CCH', 'ISP_CNL', 'ISP_CON', 'ISP_CPP', 'ISP_CPR', 'ISP_CRS', 'ISP_FIN', 'ISP_FLG', 'ISP_HCP', 'ISP_HLV', 'ISP_III', 'ISP_ISI', 'ISP_ISM', 'ISP_JRR', 'ISP_LAP', 'ISP_MCI', 'ISP_MOD', 'ISP_MSL', 'ISP_MSO', 'ISP_MST', 'ISP_MSX', 'ISP_MTC', 'ISP_NCI', 'ISP_NCN', 'ISP_NLP', 'ISP_NONE', 'ISP_NPL', 'ISP_OBH', 'ISP_PEN', 'ISP_PFL', 'ISP_PIT', 'ISP_PLA', 'ISP_PLC', 'ISP_PLL', 'ISP_PLP', 'ISP_PSF', 'ISP_REO', 'ISP_RES', 'ISP_RIP', 'ISP_RST', 'ISP_SCC', 'ISP_SCH', 'ISP_SFP', 'ISP_SMALL', 'ISP_SPX', 'ISP_SSH', 'ISP_STA', 'ISP_TINY', 'ISP_TOC', 'ISP_VER', 'ISP_VTN', 'ISS_16', 'ISS_FRONT_END', 'ISS_GAME', 'ISS_MPSPEEDUP', 'ISS_MULTI', 'ISS_PAUSED', 'ISS_REPLAY', 'ISS_SHIFTU', 'ISS_SHIFTU_FOLLOW', 'ISS_SHIFTU_NO_OPT', 'ISS_SHOW_2D', 'ISS_SOUND_MUTE', 'ISS_VIEW_OVERRIDE', 'ISS_VISIBLE', 'ISS_WINDOWED', 'IS_ACR', 'IS_AXI', 'IS_AXM', 'IS_AXO', 'IS_BFN', 'IS_BTC', 'IS_BTN', 'IS_BTT', 'IS_CCH', 'IS_CNL', 'IS_CON', 'IS_CPP', 'IS_CPR', 'IS_CRS', 'IS_FIN', 'IS_FLG', 'IS_HCP', 'IS_HLV', 'IS_III', 'IS_ISI', 'IS_ISM', 'IS_JRR', 'IS_LAP', 'IS_MCI', 'IS_MOD', 'IS_MSL', 'IS_MSO', 'IS_MST', 'IS_MSX', 'IS_MTC', 'IS_NCI', 'IS_NCN', 'IS_NLP', 'IS_NPL', 'IS_OBH', 'IS_PEN', 'IS_PFL', 'IS_PIT', 'IS_PLA', 'IS_PLC', 'IS_PLL', 'IS_PLP', 'IS_PSF', 'IS_REO', 'IS_RES', 'IS_RIP', 'IS_RST', 'IS_SCC', 'IS_SCH', 'IS_SFP', 'IS_SMALL', 'IS_SPX', 'IS_SSH', 'IS_STA', 'IS_TINY', 'IS_TOC', 'IS_VER', 'IS_VTN', 'JRR_2', 'JRR_3', 'JRR_6', 'JRR_7', 'JRR_REJECT', 'JRR_RESET', 'JRR_RESET_NO_REPAIR', 'JRR_SPAWN', 'LEAVR_BANNED', 'LEAVR_CPW', 'LEAVR_DISCO', 'LEAVR_HACK', 'LEAVR_JOOS', 'LEAVR_KICKED', 'LEAVR_LOSTCONN', 'LEAVR_OOS', 'LEAVR_SECURITY', 'LEAVR_TIMEOUT', 'LFS_BELARUSSIAN', 'LFS_BRAZILIAN', 'LFS_BULGARIAN', 'LFS_CASTELLANO', 'LFS_CATALAN', 'LFS_CROATIAN', 'LFS_CZECH', 'LFS_DANSK', 'LFS_DEUTSCH', 'LFS_ENGLISH', 'LFS_ESTONIAN', 'LFS_FRENCH', 'LFS_GALEGO', 'LFS_GREEK', 'LFS_HUNGARIAN', 'LFS_INDONESIAN', 'LFS_ITALIANO', 'LFS_JAPANESE', 'LFS_KOREAN', 'LFS_LATINO', 'LFS_LATVIAN', 'LFS_LITHUANIAN', 'LFS_NEDERLANDS', 'LFS_NORSK', 'LFS_POLSKI', 'LFS_PORTUGUESE', 'LFS_ROMANIAN', 'LFS_RUSSIAN', 'LFS_SERBIAN', 'LFS_SIMPLIFIED_CHINESE', 'LFS_SLOVAK', 'LFS_SLOVENSKI', 'LFS_SUOMI', 'LFS_SWEDISH', 'LFS_TRADITIONAL_CHINESE', 'LFS_TURKISH', 'LFS_UKRAINIAN', 'MAX_PLAYERS', 'MSO_O', 'MSO_PREFIX', 'MSO_SYSTEM', 'MSO_USER', 'NodeLap', 'OBH_CAN_MOVE', 'OBH_LAYOUT', 'OBH_ON_SPOT', 'OBH_WAS_MOVING', 'OG_BAR', 'OG_CTRL', 'OG_KM', 'OG_SHIFT', 'OG_TURBO', 'ObjectInfo', 'OutGaugePack', 'OutSimPack', 'PENALTY_30', 'PENALTY_45', 'PENALTY_DT', 'PENALTY_DT_VALID', 'PENALTY_NONE', 'PENALTY_SG', 'PENALTY_SG_VALID', 'PENR_ADMIN', 'PENR_FALSE_START', 'PENR_SPEEDING', 'PENR_STOP_LATE', 'PENR_STOP_SHORT', 'PENR_UNKNOWN', 'PENR_WRONG_WAY', 'PIF_AUTOCLUTCH', 'PIF_AUTOGEARS', 'PIF_AXIS_CLUTCH', 'PIF_CUSTOM_VIEW', 'PIF_HELP_B', 'PIF_INPITS', 'PIF_KB_NO_HELP', 'PIF_KB_STABILISED', 'PIF_MOUSE', 'PIF_RESERVED_2', 'PIF_RESERVED_32', 'PIF_RESERVED_4', 'PIF_SHIFTER', 'PIF_SWAPSIDE', 'PITLANE_DT', 'PITLANE_ENTER', 'PITLANE_EXIT', 'PITLANE_NO_PURPOSE', 'PITLANE_SG', 'PMO_ADD_OBJECTS', 'PMO_CLEAR_ALL', 'PMO_DEL_OBJECTS', 'PMO_LOADING_FILE', 'PSE_BODY_MAJOR', 'PSE_BODY_MINOR', 'PSE_FR_DAM', 'PSE_FR_WHL', 'PSE_LE_FR_DAM', 'PSE_LE_FR_WHL', 'PSE_LE_RE_DAM', 'PSE_LE_RE_WHL', 'PSE_NOTHING', 'PSE_NUM', 'PSE_REFUEL', 'PSE_RE_DAM', 'PSE_RE_WHL', 'PSE_RI_FR_DAM', 'PSE_RI_FR_WHL', 'PSE_RI_RE_DAM', 'PSE_RI_RE_WHL', 'PSE_SETUP', 'PSE_STOP', 'RIPOPT_FULL_PHYS', 'RIPOPT_LOOP', 'RIPOPT_SKINS', 'RIP_ALREADY', 'RIP_CORRUPTED', 'RIP_DEDICATED', 'RIP_DEST_OOB', 'RIP_NOT_FOUND', 'RIP_NOT_REPLAY', 'RIP_OK', 'RIP_OOS', 'RIP_UNKNOWN', 'RIP_UNLOADABLE', 'RIP_USER', 'RIP_WRONG_MODE', 'SETF_ABS_ENABLE', 'SETF_SYMM_WHEELS', 'SETF_TC_ENABLE', 'SMALL_ALC', 'SMALL_NLI', 'SMALL_NONE', 'SMALL_RTP', 'SMALL_SSG', 'SMALL_SSP', 'SMALL_STP', 'SMALL_TMS', 'SMALL_VTA', 'SND_ERROR', 'SND_INVALIDKEY', 'SND_MESSAGE', 'SND_SILENT', 'SND_SYSMESSAGE', 'SSH_CORRUPTED', 'SSH_DEDICATED', 'SSH_NO_SAVE', 'SSH_OK', 'TINY_ALC', 'TINY_AXC', 'TINY_AXI', 'TINY_CLOSE', 'TINY_CLR', 'TINY_GTH', 'TINY_ISM', 'TINY_MCI', 'TINY_MPE', 'TINY_NCI', 'TINY_NCN', 'TINY_NLP', 'TINY_NONE', 'TINY_NPL', 'TINY_PING', 'TINY_REN', 'TINY_REO', 'TINY_REPLY', 'TINY_RES', 'TINY_RIP', 'TINY_RST', 'TINY_SCP', 'TINY_SST', 'TINY_VER', 'TINY_VTC', 'TYRE_HYBRID', 'TYRE_KNOBBLY', 'TYRE_NOT_CHANGED', 'TYRE_R1', 'TYRE_R2', 'TYRE_R3', 'TYRE_R4', 'TYRE_ROAD_NORMAL', 'TYRE_ROAD_SUPER', 'VIEW_ANOTHER', 'VIEW_CAM', 'VIEW_CUSTOM', 'VIEW_DRIVER', 'VIEW_FOLLOW', 'VIEW_HELI', 'VOTE_END', 'VOTE_NONE', 'VOTE_QUALIFY', 'VOTE_RESTART']
+__all__ = [
+    'AXO_START_LIGHTS',
+    'BFN_CLEAR',
+    'BFN_DEL_BTN',
+    'BFN_REQUEST',
+    'BFN_USER_CLEAR',
+    'CAR_ALL',
+    'CAR_BF1',
+    'CAR_FBM',
+    'CAR_FO8',
+    'CAR_FOX',
+    'CAR_FXO',
+    'CAR_FXR',
+    'CAR_FZ5',
+    'CAR_FZR',
+    'CAR_LX4',
+    'CAR_LX6',
+    'CAR_MRT',
+    'CAR_NONE',
+    'CAR_RAC',
+    'CAR_RB4',
+    'CAR_UF1',
+    'CAR_UFR',
+    'CAR_XFG',
+    'CAR_XFR',
+    'CAR_XRG',
+    'CAR_XRR',
+    'CAR_XRT',
+    'CCI_BLUE',
+    'CCI_FIRST',
+    'CCI_LAG',
+    'CCI_LAST',
+    'CCI_YELLOW',
+    'CIM_NORMAL',
+    'CIM_OPTIONS',
+    'CIM_HOST_OPTIONS',
+    'CIM_GARAGE',
+    'CIM_CAR_SELECT',
+    'CIM_TRACK_SELECT',
+    'CIM_SHIFTU',
+    'CONF_CONFIRMED',
+    'CONF_DID_NOT_PIT',
+    'CONF_DISQ',
+    'CONF_MENTIONED',
+    'CONF_PENALTY_30',
+    'CONF_PENALTY_45',
+    'CONF_PENALTY_DT',
+    'CONF_PENALTY_SG',
+    'CONF_TIME',
+    'CarContOBJ',
+    'CarContact',
+    'CarHCP',
+    'CompCar',
+    'DL_ABS',
+    'DL_BATTERY',
+    'DL_FULLBEAM',
+    'DL_HANDBRAKE',
+    'DL_NUM',
+    'DL_OILWARN',
+    'DL_PITSPEED',
+    'DL_SHIFT',
+    'DL_SIGNAL_ANY',
+    'DL_SIGNAL_L',
+    'DL_SIGNAL_R',
+    'DL_SPARE',
+    'DL_TC',
+    'FVM_PLAIN',
+    'FVM_BUTTONS',
+    'FVM_EDIT',
+    'GRG_INFO',
+    'GRG_COLOURS',
+    'GRG_BRAKE_TC',
+    'GRG_SUSP',
+    'GRG_STEER',
+    'GRG_DRIVE',
+    'GRG_TYRES',
+    'GRG_AERO',
+    'GRG_PASS',
+    'HInfo',
+    'HOSTF_CAN_RESET',
+    'HOSTF_CAN_SELECT',
+    'HOSTF_CAN_VOTE',
+    'HOSTF_CRUISE',
+    'HOSTF_FCV',
+    'HOSTF_MID_RACE',
+    'HOSTF_MUST_PIT',
+    'HOS_FIRST',
+    'HOS_LAST',
+    'HOS_LICENSED',
+    'HOS_S1',
+    'HOS_S2',
+    'HOS_SPECPASS',
+    'INSIM_VERSION',
+    'INST_ALWAYS_ON',
+    'IRP_ARP',
+    'IRP_ARQ',
+    'IRP_ERR',
+    'IRP_HLR',
+    'IRP_HOS',
+    'IRP_SEL',
+    'IR_ARP',
+    'IR_ARQ',
+    'IR_ERR',
+    'IR_ERR_ADMIN',
+    'IR_ERR_HOSTNAME',
+    'IR_ERR_NOSPEC',
+    'IR_ERR_PACKET',
+    'IR_ERR_PACKET2',
+    'IR_ERR_SPEC',
+    'IR_HLR',
+    'IR_HOS',
+    'IR_SEL',
+    'ISB_C1',
+    'ISB_C2',
+    'ISB_C4',
+    'ISB_CLICK',
+    'ISB_CTRL',
+    'ISB_DARK',
+    'ISB_LEFT',
+    'ISB_LIGHT',
+    'ISB_LMB',
+    'ISB_RIGHT',
+    'ISB_RMB',
+    'ISB_SHIFT',
+    'ISF_AXM_EDIT',
+    'ISF_AXM_LOAD',
+    'ISF_CON',
+    'ISF_HLV',
+    'ISF_LOCAL',
+    'ISF_MCI',
+    'ISF_MSO_COLS',
+    'ISF_NLP',
+    'ISF_OBH',
+    'ISF_REQ_JOIN',
+    'ISF_RES_0',
+    'ISF_RES_1',
+    'ISP_ACR',
+    'ISP_AXI',
+    'ISP_AXM',
+    'ISP_AXO',
+    'ISP_BFN',
+    'ISP_BTC',
+    'ISP_BTN',
+    'ISP_BTT',
+    'ISP_CCH',
+    'ISP_CIM',
+    'ISP_CNL',
+    'ISP_CON',
+    'ISP_CPP',
+    'ISP_CPR',
+    'ISP_CRS',
+    'ISP_CSC',
+    'ISP_FIN',
+    'ISP_FLG',
+    'ISP_HCP',
+    'ISP_HLV',
+    'ISP_III',
+    'ISP_ISI',
+    'ISP_ISM',
+    'ISP_JRR',
+    'ISP_LAP',
+    'ISP_MCI',
+    'ISP_MOD',
+    'ISP_MSL',
+    'ISP_MSO',
+    'ISP_MST',
+    'ISP_MSX',
+    'ISP_MTC',
+    'ISP_NCI',
+    'ISP_NCN',
+    'ISP_NLP',
+    'ISP_NONE',
+    'ISP_NPL',
+    'ISP_OBH',
+    'ISP_OCO',
+    'ISP_PEN',
+    'ISP_PFL',
+    'ISP_PIT',
+    'ISP_PLA',
+    'ISP_PLC',
+    'ISP_PLL',
+    'ISP_PLP',
+    'ISP_PSF',
+    'ISP_REO',
+    'ISP_RES',
+    'ISP_RIP',
+    'ISP_RST',
+    'ISP_SCC',
+    'ISP_SCH',
+    'ISP_SFP',
+    'ISP_SLC',
+    'ISP_SMALL',
+    'ISP_SPX',
+    'ISP_SSH',
+    'ISP_STA',
+    'ISP_TINY',
+    'ISP_TOC',
+    'ISP_TTC',
+    'ISP_UCO',
+    'ISP_VER',
+    'ISP_VTN',
+    'ISS_DIALOG',
+    'ISS_FRONT_END',
+    'ISS_GAME',
+    'ISS_MPSPEEDUP',
+    'ISS_MULTI',
+    'ISS_PAUSED',
+    'ISS_REPLAY',
+    'ISS_SHIFTU',
+    'ISS_SHIFTU_FOLLOW',
+    'ISS_SHIFTU_NO_OPT',
+    'ISS_SHOW_2D',
+    'ISS_SOUND_MUTE',
+    'ISS_TEXT_ENTRY',
+    'ISS_VIEW_OVERRIDE',
+    'ISS_VISIBLE',
+    'ISS_WINDOWED',
+    'IS_ACR',
+    'IS_AXI',
+    'IS_AXM',
+    'IS_AXO',
+    'IS_BFN',
+    'IS_BTC',
+    'IS_BTN',
+    'IS_BTT',
+    'IS_CCH',
+    'IS_CIM',
+    'IS_CNL',
+    'IS_CON',
+    'IS_CPP',
+    'IS_CPR',
+    'IS_CRS',
+    'IS_CSC',
+    'IS_FIN',
+    'IS_FLG',
+    'IS_HCP',
+    'IS_HLV',
+    'IS_III',
+    'IS_ISI',
+    'IS_ISM',
+    'IS_JRR',
+    'IS_LAP',
+    'IS_MCI',
+    'IS_MOD',
+    'IS_MSL',
+    'IS_MSO',
+    'IS_MST',
+    'IS_MSX',
+    'IS_MTC',
+    'IS_NCI',
+    'IS_NCN',
+    'IS_NLP',
+    'IS_NPL',
+    'IS_OBH',
+    'IS_OCO',
+    'IS_PEN',
+    'IS_PFL',
+    'IS_PIT',
+    'IS_PLA',
+    'IS_PLC',
+    'IS_PLL',
+    'IS_PLP',
+    'IS_PSF',
+    'IS_REO',
+    'IS_RES',
+    'IS_RIP',
+    'IS_RST',
+    'IS_SCC',
+    'IS_SCH',
+    'IS_SFP',
+    'IS_SLC',
+    'IS_SMALL',
+    'IS_SPX',
+    'IS_SSH',
+    'IS_STA',
+    'IS_TINY',
+    'IS_TOC',
+    'IS_TTC',
+    'IS_VER',
+    'IS_VTN',
+    'JRR_2',
+    'JRR_3',
+    'JRR_6',
+    'JRR_7',
+    'JRR_REJECT',
+    'JRR_RESET',
+    'JRR_RESET_NO_REPAIR',
+    'JRR_SPAWN',
+    'LEAVR_BANNED',
+    'LEAVR_CPW',
+    'LEAVR_DISCO',
+    'LEAVR_HACK',
+    'LEAVR_JOOS',
+    'LEAVR_KICKED',
+    'LEAVR_LOSTCONN',
+    'LEAVR_OOS',
+    'LEAVR_SECURITY',
+    'LEAVR_TIMEOUT',
+    'LFS_BELARUSSIAN',
+    'LFS_BRAZILIAN',
+    'LFS_BULGARIAN',
+    'LFS_CASTELLANO',
+    'LFS_CATALAN',
+    'LFS_CROATIAN',
+    'LFS_CZECH',
+    'LFS_DANSK',
+    'LFS_DEUTSCH',
+    'LFS_ENGLISH',
+    'LFS_ESTONIAN',
+    'LFS_FRENCH',
+    'LFS_GALEGO',
+    'LFS_GREEK',
+    'LFS_HUNGARIAN',
+    'LFS_INDONESIAN',
+    'LFS_ITALIANO',
+    'LFS_JAPANESE',
+    'LFS_KOREAN',
+    'LFS_LATINO',
+    'LFS_LATVIAN',
+    'LFS_LITHUANIAN',
+    'LFS_NEDERLANDS',
+    'LFS_NORSK',
+    'LFS_POLSKI',
+    'LFS_PORTUGUESE',
+    'LFS_ROMANIAN',
+    'LFS_RUSSIAN',
+    'LFS_SERBIAN',
+    'LFS_SIMPLIFIED_CHINESE',
+    'LFS_SLOVAK',
+    'LFS_SLOVENSKI',
+    'LFS_SUOMI',
+    'LFS_SWEDISH',
+    'LFS_TRADITIONAL_CHINESE',
+    'LFS_TURKISH',
+    'LFS_UKRAINIAN',
+    'MARSH_IS_CP',
+    'MARSH_IS_AREA',
+    'MARSH_MARSHALL',
+    'MARSH_ROUTE',
+    'MAX_PLAYERS',
+    'MSO_O',
+    'MSO_PREFIX',
+    'MSO_SYSTEM',
+    'MSO_USER',
+    'NodeLap',
+    'NRM_NORMAL',
+    'NRM_WHEEL_TEMPS',
+    'NRM_WHEEL_DAMAGE',
+    'NRM_LIVE_SETTINGS',
+    'NRM_PIT_INSTRUCTIONS',
+    'OBH_CAN_MOVE',
+    'OBH_LAYOUT',
+    'OBH_ON_SPOT',
+    'OBH_WAS_MOVING',
+    'OCO_ZERO',
+    'OCO_1',
+    'OCO_2',
+    'OCO_3',
+    'OCO_LIGHTS_RESET',
+    'OCO_LIGHTS_SET',
+    'OCO_LIGHTS_UNSET',
+    'OCO_INDEX_MAIN',
+    'OG_BAR',
+    'OG_CTRL',
+    'OG_KM',
+    'OG_SHIFT',
+    'OG_TURBO',
+    'ObjectInfo',
+    'OutGaugePack',
+    'OutSimPack',
+    'PENALTY_30',
+    'PENALTY_45',
+    'PENALTY_DT',
+    'PENALTY_DT_VALID',
+    'PENALTY_NONE',
+    'PENALTY_SG',
+    'PENALTY_SG_VALID',
+    'PENR_ADMIN',
+    'PENR_FALSE_START',
+    'PENR_SPEEDING',
+    'PENR_STOP_LATE',
+    'PENR_STOP_SHORT',
+    'PENR_UNKNOWN',
+    'PENR_WRONG_WAY',
+    'PIF_AUTOCLUTCH',
+    'PIF_AUTOGEARS',
+    'PIF_AXIS_CLUTCH',
+    'PIF_CUSTOM_VIEW',
+    'PIF_HELP_B',
+    'PIF_INPITS',
+    'PIF_KB_NO_HELP',
+    'PIF_KB_STABILISED',
+    'PIF_MOUSE',
+    'PIF_RESERVED_2',
+    'PIF_RESERVED_32',
+    'PIF_RESERVED_4',
+    'PIF_SHIFTER',
+    'PIF_SWAPSIDE',
+    'PITLANE_DT',
+    'PITLANE_ENTER',
+    'PITLANE_EXIT',
+    'PITLANE_NO_PURPOSE',
+    'PITLANE_SG',
+    'PMO_ADD_OBJECTS',
+    'PMO_AVOID_CHECK',
+    'PMO_FILE_END',
+    'PMO_GET_Z',
+    'PMO_MOVE_MODIFY',
+    'PMO_POSITION',
+    'PMO_SELECTION',
+    'PMO_SELECTION_REAL',
+    'PMO_TINY_AXM',
+    'PMO_TTC_SEL',
+    'PMO_CLEAR_ALL',
+    'PMO_DEL_OBJECTS',
+    'PMO_LOADING_FILE',
+    'PSE_BODY_MAJOR',
+    'PSE_BODY_MINOR',
+    'PSE_FR_DAM',
+    'PSE_FR_WHL',
+    'PSE_LE_FR_DAM',
+    'PSE_LE_FR_WHL',
+    'PSE_LE_RE_DAM',
+    'PSE_LE_RE_WHL',
+    'PSE_NOTHING',
+    'PSE_NUM',
+    'PSE_REFUEL',
+    'PSE_RE_DAM',
+    'PSE_RE_WHL',
+    'PSE_RI_FR_DAM',
+    'PSE_RI_FR_WHL',
+    'PSE_RI_RE_DAM',
+    'PSE_RI_RE_WHL',
+    'PSE_SETUP',
+    'PSE_STOP',
+    'RIPOPT_FULL_PHYS',
+    'RIPOPT_LOOP',
+    'RIPOPT_SKINS',
+    'RIP_ALREADY',
+    'RIP_CORRUPTED',
+    'RIP_DEDICATED',
+    'RIP_DEST_OOB',
+    'RIP_NOT_FOUND',
+    'RIP_NOT_REPLAY',
+    'RIP_OK',
+    'RIP_OOS',
+    'RIP_UNKNOWN',
+    'RIP_UNLOADABLE',
+    'RIP_USER',
+    'RIP_WRONG_MODE',
+    'SETF_ABS_ENABLE',
+    'SETF_SYMM_WHEELS',
+    'SETF_TC_ENABLE',
+    'SMALL_ALC',
+    'SMALL_LCS',
+    'SMALL_NLI',
+    'SMALL_NONE',
+    'SMALL_RTP',
+    'SMALL_SSG',
+    'SMALL_SSP',
+    'SMALL_STP',
+    'SMALL_TMS',
+    'SMALL_VTA',
+    'SND_ERROR',
+    'SND_INVALIDKEY',
+    'SND_MESSAGE',
+    'SND_SILENT',
+    'SND_SYSMESSAGE',
+    'SSH_CORRUPTED',
+    'SSH_DEDICATED',
+    'SSH_NO_SAVE',
+    'SSH_OK',
+    'TINY_ALC',
+    'TINY_AXC',
+    'TINY_AXI',
+    'TINY_AXM',
+    'TINY_CLOSE',
+    'TINY_CLR',
+    'TINY_GTH',
+    'TINY_ISM',
+    'TINY_MCI',
+    'TINY_MPE',
+    'TINY_NCI',
+    'TINY_NCN',
+    'TINY_NLP',
+    'TINY_NONE',
+    'TINY_NPL',
+    'TINY_PING',
+    'TINY_REN',
+    'TINY_REO',
+    'TINY_REPLY',
+    'TINY_RES',
+    'TINY_RIP',
+    'TINY_RST',
+    'TINY_SCP',
+    'TINY_SLC',
+    'TINY_SST',
+    'TINY_VER',
+    'TINY_VTC',
+    'TTC_NONE',
+    'TTC_SEL',
+    'TTC_SEL_START',
+    'TTC_SEL_STOP',
+    'TYRE_HYBRID',
+    'TYRE_KNOBBLY',
+    'TYRE_NOT_CHANGED',
+    'TYRE_R1',
+    'TYRE_R2',
+    'TYRE_R3',
+    'TYRE_R4',
+    'TYRE_ROAD_NORMAL',
+    'TYRE_ROAD_SUPER',
+    'UCO_CIRCLE_ENTER',
+    'UCO_CIRCLE_LEAVE',
+    'UCO_CP_FWD',
+    'UCO_CP_REV',
+    'VIEW_ANOTHER',
+    'VIEW_CAM',
+    'VIEW_CUSTOM',
+    'VIEW_DRIVER',
+    'VIEW_FOLLOW',
+    'VIEW_HELI',
+    'VOTE_END',
+    'VOTE_NONE',
+    'VOTE_QUALIFY',
+    'VOTE_RESTART',
+ ]
 
 
 
-INSIM_VERSION = 7
+INSIM_VERSION = 8
 MAX_PLAYERS = 40
 
 
@@ -77,6 +603,12 @@ ISP_ACR = 55
 ISP_HCP = 56
 ISP_NCI = 57
 ISP_JRR = 58
+ISP_UCO = 59
+ISP_OCO = 60
+ISP_TTC = 61
+ISP_SLC = 62
+ISP_CSC = 63
+ISP_CIM = 64
 
 # Relay packets.
 IRP_ARQ = 250
@@ -112,6 +644,8 @@ TINY_AXC = 21
 TINY_RIP = 22
 TINY_NCI = 23
 TINY_ALC = 24
+TINY_AXM = 25
+TINY_SLC = 26
 
 # Enum for IS_SMALL sub-type
 SMALL_NONE = 0
@@ -123,6 +657,14 @@ SMALL_STP = 5
 SMALL_RTP = 6
 SMALL_NLI = 7
 SMALL_ALC = 8
+SMALL_LCS = 9
+
+# Fourth byte of IS_TTC
+TTC_NONE = 0
+TTC_SEL = 1
+TTC_SEL_START = 2
+TTC_SEL_STOP = 3
+
 
 # Bit flags for ISI Flags
 ISF_RES_0 = 1
@@ -218,7 +760,7 @@ ISS_GAME = 1
 ISS_REPLAY = 2
 ISS_PAUSED = 4
 ISS_SHIFTU = 8
-ISS_16 = 16
+ISS_DIALOG = 16
 ISS_SHIFTU_FOLLOW = 32
 ISS_SHIFTU_NO_OPT = 64
 ISS_SHOW_2D = 128
@@ -229,6 +771,7 @@ ISS_WINDOWED = 2048
 ISS_SOUND_MUTE = 4096
 ISS_VIEW_OVERRIDE = 8192
 ISS_VISIBLE = 16384
+ISS_TEXT_ENTRY = 32768
 
 # Bit flags for IS_PIT Work
 PSE_NOTHING = 1
@@ -386,6 +929,26 @@ LFS_UKRAINIAN = 34
 LFS_INDONESIAN = 35
 LFS_ROMANIAN = 36
 
+# Autocross Objects
+AXO_START_LIGHTS = 149
+MARSH_IS_CP = 252       # insim checkpoint
+MARSH_IS_AREA = 253     # insim circle
+MARSH_MARSHALL = 254    # restricted area
+MARSH_ROUTE	= 255       # route checker
+
+# SMALL_LCS Flags
+LCS_SET_SIGNALS = 1		# bit 0
+LCS_SET_FLASH = 2		# bit 1
+LCS_SET_HEADLIGHTS = 4	# bit 2
+LCS_SET_HORN = 8		# bit 3
+LCS_SET_SIREN = 0x10	# bit 4
+
+LCS_Mask_Signals = 0x0300       # bits  8-9   (Switches & 0x0300) - Signal    (0 off / 1 left / 2 right / 3 hazard)
+LCS_Mask_Flash = 0x0400         # bit   10    (Switches & 0x0400) - Flash
+LCS_Mask_Headlights = 0x0800    # bit	11    (Switches & 0x0800) - Headlights
+LCS_Mask_Horn = 0x070000        # bits  16-18 (Switches & 0x070000) - Horn    (0 off / 1 to 5 horn type)
+LCS_Mask_Siren = 0x300000       # bits  20-21 (Switches & 0x300000) - Siren   (0 off / 1 fast / 2 slow)
+
 
 def _eat_null_chars(str_):
     return str_.rstrip('\x00')
@@ -481,6 +1044,24 @@ class IS_SMALL(object):
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.SubT, self.UVal = self.pack_s.unpack(data)
         return self
+
+class IS_TTC(object):
+    """General purpose 8 byte packet (Target To Connection)
+
+    """
+    pack_s = struct.Struct('8B')
+    def __init__(self, ReqI=0, SubT=TTC_NONE, UCID=0, B1=0, B2=0, B3=0):
+        self.Size = 8
+        self.Type = ISP_TTC
+        self.ReqI = ReqI
+        self.SubT = SubT    # From TTC_*
+        self.UCID = UCID    # connection's unique id (0 = local)
+        self.B1 = B1        # B1, B2, B3 may be used in various ways depending on SubT
+        self.B2 = B2
+        self.B3 = B3
+    def pack(self):
+        return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.SubT, self.UCID, self.B1, self.B2, self.B3)
+
 
 class IS_STA(object):
     """STAte packet, sent whenever the data in the packet changes. To request
@@ -757,6 +1338,57 @@ class IS_NCI(object):
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.UCID, self.Language, self.Sp1, self.Sp2, self.Sp3, self.UserID, self.IPAddress = self.pack_s.unpack(data)
         return self
+
+class IS_SLC(object):
+    """SeLected Car - sent when a connection selects a car (empty if no car)
+
+    """
+    pack_s = struct.Struct('4B4s')
+    def unpack(self, data):
+        self.Size, self.Type, self.ReqI, self.UCID, self.CName = self.pack_s.unpack(data)
+        self.CName = _eat_null_chars(self.CName)
+        return self
+
+class IS_CIM(object):
+    """Conn Interface Mode
+
+    """
+    pack_s = struct.Struct('8B')
+    def unpack(self, data):
+        self.Size, self.Type, self.ReqI, self.UCID, self.Mode, self.SubMode, self.SelType, self.Sp3 = self.pack_s.unpack(data)
+        return self
+
+# Mode identifiers
+CIM_NORMAL = 0          # not in a special mode
+CIM_OPTIONS = 1
+CIM_HOST_OPTIONS = 2
+CIM_GARAGE = 3
+CIM_CAR_SELECT = 4
+CIM_TRACK_SELECT = 5
+CIM_SHIFTU = 6          # free view mode
+
+# Submode identifiers for CIM_NORMAL
+NRM_NORMAL = 0
+NRM_WHEEL_TEMPS = 1         # F9
+NRM_WHEEL_DAMAGE = 2        # F10
+NRM_LIVE_SETTINGS = 3       # F11
+NRM_PIT_INSTRUCTIONS = 4    # F12
+
+# SubMode identifiers for CIM_GARAGE
+GRG_INFO = 1
+GRG_COLOURS = 2
+GRG_BRAKE_TC = 3
+GRG_SUSP = 4
+GRG_STEER = 5
+GRG_DRIVE = 6
+GRG_TYRES = 7
+GRG_AERO = 8
+GRG_PASS = 9
+
+# SubMode identifiers for CIM_SHIFTU
+FVM_PLAIN = 0   # no buttons displayed
+FVM_BUTTONS = 1 # buttons displayed (not editing)
+FVM_EDIT = 2    # edit mode
 
 class IS_CNL(object):
     """ConN Leave
@@ -1245,7 +1877,7 @@ class CarContOBJ(object):
         self.Direction = 0
         self.Heading = 0
         self.Speed = 0
-        self.Sp2 = 0
+        self.Zbyte = 0
         self.X = 0
         self.Y = 0
 
@@ -1258,28 +1890,127 @@ class IS_OBH(object):
     pack_s = struct.Struct('4B2H4B2h2h4B')
     def unpack(self, data):
         self.C = CarContOBJ()
-        self.Size, self.Type, self.ReqI, self.PLID, self.SpClose, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y, self.X, self.Y, self.Sp0, self.Sp1, self.Index, self.OBHFlags = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.PLID, self.SpClose, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Zbyte, self.C.X, self.C.Y, self.X, self.Y, self.Zbyte, self.Sp1, self.Index, self.OBHFlags = self.pack_s.unpack(data)
         return self
 
 class IS_HLV(object):
     pack_s = struct.Struct('6BH4B2h')
     def unpack(self, data):
         self.C = CarContOBJ()
-        self.Size, self.Type, self.ReqI, self.PLID, self.HLVC, self.Sp1, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y = self.pack_s.unpack(data)
+        self.Size, self.Type, self.ReqI, self.PLID, self.HLVC, self.Sp1, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Zbyte, self.C.X, self.C.Y = self.pack_s.unpack(data)
         return self
+
+class IS_UCO(object):
+    pack_s = struct.Struct('8BI4B2h')
+    def unpack(self, data):
+        self.C = CarContOBJ() # 4B2h
+        self.Size, self.Type, self.ReqI, self.PLID, self.Sp0, self.UCOAction, self.Sp2, self.Sp3, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y = self.pack_s.unpack(data[:20])
+        self.Info = ObjectInfo(data[20:], 0)
+        return self
+
+UCO_CIRCLE_ENTER = 0
+UCO_CIRCLE_LEAVE = 1
+UCO_CP_FWD = 2
+UCO_CP_REV = 3
+
+class IS_CSC(object):
+    pack_s = struct.Struct('8BI4B2h')
+    def unpack(self, data):
+        self.C = CarContOBJ() # 4B2h
+        self.Size, self.Type, self.ReqI, self.PLID, self.Sp0, self.CSCAction, self.Sp2, self.Sp3, self.Time, self.C.Direction, self.C.Heading, self.C.Speed, self.C.Sp2, self.C.X, self.C.Y = self.pack_s.unpack(data)
+        return self
+
+CSC_STOP = 0
+CSC_START = 1
+
+class IS_OCO(object):
+    """ Object COntrol
+
+    """
+    pack_s = struct.Struct('8B')
+    def __init__(self, OCOAction=0, Index=0, Identifier=0, Data=0):
+        """ Initialise a new IS_OCO packet
+        Args:
+            OCOAction   : values from OCO_*
+            Index       : specifies which lights you want to override:
+                          AXO_START_LIGHTS / OCO_INDEX_MAIN
+            Identifier  : identify particular start lights objects (0 to 63 or 255 = all)
+            Data        : specifies particular bulbs using the low 4 bits
+                    OCO_INDEX_MAIN:
+                        bit 0 (1) : red1
+                        bit 1 (2) : red2
+                        bit 2 (4) : red3
+                        bit 3 (8) : green
+                    AXO_START_LIGHTS:
+                        bit 0 (1) : red
+                        bit 1 (2) : amber
+                        bit 3 (8) : green
+
+        """
+        self.Size = 8
+        self.Type = ISP_OCO
+        self.ReqI = 0
+        self.Zero = 0
+        self.OCOAction = OCOAction
+        self.Index = Index
+        self.Identifier = Identifier
+        self.Data = Data
+    def pack(self):
+        return self.pack_s.pack(self.Size, self.Type, self.ReqI, self.Zero, self.OCOAction, self.Index, self.Identifier, self.Data)
+    def unpack(self, data):
+        self.Size, self.Type, self.ReqI, self.Zero, self.OCOAction, self.Index, self.Identifier, self.Data = self.pack_s.unpack(data)
+        return self
+
+OCO_ZERO = 0            # reserved
+OCO_1 = 1
+OCO_2 = 2
+OCO_3 = 3
+OCO_LIGHTS_RESET = 4    # give up control of all lights
+OCO_LIGHTS_SET = 5      # use Data byte to set the bulbs
+OCO_LIGHTS_UNSET = 6    # give up control of the specified lights
+
+OCO_INDEX_MAIN = 240    # special value to override the main start light system
+
 
 class ObjectInfo(object):
     pack_s = struct.Struct('2h4B')
     def __init__(self, data, index):
         self.X, self.Y, self.Zbyte, self.Flags, self.Index, self.Heading = self.pack_s.unpack(data[index:index+8])
 
-PMO_LOADING_FILE = 0,
-PMO_ADD_OBJECTS = 1,
-PMO_DEL_OBJECTS = 2,
-PMO_CLEAR_ALL = 3,
+# PMOAction
+PMO_LOADING_FILE = 0
+PMO_ADD_OBJECTS = 1
+PMO_DEL_OBJECTS = 2
+PMO_CLEAR_ALL = 3
+PMO_TINY_AXM = 4
+PMO_TTC_SEL = 5
+PMO_SELECTION = 6
+PMO_POSITION = 7
+PMO_GET_Z = 8
+
+# PMOFlags
+PMO_FILE_END = 1
+PMO_MOVE_MODIFY = 2
+PMO_SELECTION_REAL = 4
+PMO_AVOID_CHECK = 8
 
 class IS_AXM(object):
     pack_s = struct.Struct('8B')
+    def __init__(self, ReqI=0, NumO=0, UCID=0, PMOAction=0, PMOFlags=0, Sp3=0, Info=[]):
+        self.Size = 8
+        self.Type = ISP_OCO
+        self.ReqI = ReqI
+        self.NumO = NumO
+        self.UCID = UCID
+        self.PMOAction = PMOAction
+        self.PMOFlags = PMOFlags
+        self.Sp3 = Sp3
+        self.Info = Info
+    def pack(self):
+        data = self.pack_s.pack(self.Size + (self.NumO * 8), self.Type, self.ReqI, self.NumO, self.UCID, self.PMOAction, self.PMOFlags, self.Sp3)
+        for i in range(self.NumO):
+            data = data + self.Info[i].pack()
+        return data
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.NumO, self.UCID, self.PMOAction, self.PMOFlags, self.Sp3 = self.pack_s.unpack(data[:8])
         data = data[8:]
