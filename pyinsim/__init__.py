@@ -6,3 +6,6 @@
 # GNU Lesser General Public License version 3 or any later version.
 #
 
+from pyinsim.core import *
+from pyinsim.insim import *
+from pyinsim.func import *

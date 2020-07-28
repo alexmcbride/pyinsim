@@ -138,8 +138,8 @@ class InSimError(Exception):
 
 
 def insim(host='127.0.0.1', port=29999, ReqI=0, UDPPort=0, Flags=0, 
-          Prefix='\x00', Interval=0, Admin='', IName='pyinsim', 
-          name='localhost'):
+          Prefix=b'\x00', Interval=0, Admin=b'', IName=b'pyinsim', 
+          name=b'localhost'):
     """Initialize a new InSim connection.
     
     Args:
@@ -171,8 +171,8 @@ def insim(host='127.0.0.1', port=29999, ReqI=0, UDPPort=0, Flags=0,
     return insim
 
     
-def relay(host='isrelay.lfs.net', port=47474, ReqI=0, HName='', Admin='', 
-          Spec='', name='localhost'):
+def relay(host='isrelay.lfs.net', port=47474, ReqI=0, HName=b'', Admin=b'', 
+          Spec=b'', name=b'localhost'):
     """Initialize a new InSim relay connection.
     
     Args:
@@ -195,7 +195,7 @@ def relay(host='isrelay.lfs.net', port=47474, ReqI=0, HName='', Admin='',
     return relay
     
 
-def outgauge(host='127.0.0.1', port=30000, callback=None, timeout=30.0, name='localhost'):
+def outgauge(host='127.0.0.1', port=30000, callback=None, timeout=30.0, name=b'localhost'):
     """Initialize a new OutGauge connection.
     
     Args:
@@ -216,7 +216,7 @@ def outgauge(host='127.0.0.1', port=30000, callback=None, timeout=30.0, name='lo
     return outgauge
 
 
-def outsim(host='127.0.0.1', port=30000, callback=None, timeout=30.0, name='localhost'):
+def outsim(host='127.0.0.1', port=30000, callback=None, timeout=30.0, name=b'localhost'):
     """Initialize a new OutSim connection.
     
     Args:
@@ -299,8 +299,8 @@ class _TcpSocket(asyncore.dispatcher):
         asyncore.dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
         self._dispatch_to = dispatch_to
-        self._send_buff = ''
-        self._recv_buff = ''
+        self._send_buff = b''
+        self._recv_buff = b''
         
     def __len__(self):
         return len(self._recv_buff)
@@ -331,8 +331,8 @@ class _TcpSocket(asyncore.dispatcher):
         self._dispatch_to._handle_error()
         
     def get_packets(self):
-        while self._recv_buff and len(self._recv_buff) >= ord(self._recv_buff[0]):
-            size = ord(self._recv_buff[0])   
+        while self._recv_buff and len(self._recv_buff) >= self._recv_buff[0]:
+            size = self._recv_buff[0]
             
             # Check size is multiple of four.
             if size % 4 > 0:
@@ -348,7 +348,7 @@ class _UdpSocket(asyncore.dispatcher):
         asyncore.dispatcher.__init__(self)
         self.create_socket(socket.AF_INET, socket.SOCK_DGRAM)
         self._dispatch_to = dispatch_to
-        self._recv_buff = ''        
+        self._recv_buff = b''        
         self._timeout = timeout
         self.connected = False
         
@@ -449,7 +449,7 @@ class _Binding(object):
         
 class _InSim(_Binding):
     """Class to manage an InSim connection with LFS."""
-    def __init__(self, name='localhost'):
+    def __init__(self, name=b'localhost'):
         """Create a new InSim object.
         
         Args:
@@ -510,7 +510,7 @@ class _InSim(_Binding):
         """
         if ucid or plid:
             self._tcp.send(insim_.IS_MTC(Msg=msg, UCID=ucid, PLID=plid).pack())
-        elif msg.startswith('/') and len(msg) < 64:
+        elif msg.startswith(b'/') and len(msg) < 64:
             self._tcp.send(insim_.IS_MST(Msg=msg).pack())            
         elif len(msg) < 96:
             self._tcp.send(insim_.IS_MSX(Msg=msg).pack())
@@ -551,10 +551,10 @@ class _InSim(_Binding):
             self._handle_insim_packet(data)
     
     def _handle_insim_packet(self, data):
-        ptype = ord(data[1])
+        ptype = data[1]
         
         # Keep alive.
-        if ptype == insim_.ISP_TINY and ord(data[3]) == insim_.TINY_NONE:
+        if ptype == insim_.ISP_TINY and data[3] == insim_.TINY_NONE:
             self._tcp.send(data)
             
         # Handle packet event.
@@ -570,7 +570,7 @@ class _InSim(_Binding):
             
 class _OutSim(_Binding):
     """Class to manage an OutGauge or OutSim connection."""
-    def __init__(self, name='localhost', timeout=0.0):
+    def __init__(self, name=b'localhost', timeout=0.0):
         """Create a new OutGauge or OutSim object.
         
         Args:

@@ -30,7 +30,7 @@ _UNESCAPE_MAP = {
     '^':    '^',
 }
 
-_ESCAPE_MAP = dict([(v, k) for (k, v) in _UNESCAPE_MAP.iteritems()])
+_ESCAPE_MAP = dict([(v, k) for (k, v) in _UNESCAPE_MAP.items()])
 
 
 def toUnicode(str_, default = 'L', cols = True):
@@ -71,7 +71,7 @@ def fromUnicode(ustr, default = 'L'):
         if (ord(c) <= 127) or (c in codec[1]):
             accum += c
         else:
-            for (key, charset) in _ENCODING_MAP.iteritems():
+            for (key, charset) in _ENCODING_MAP.items():
                 if c in charset[1]:
                     # Look-behind, reduces charset jumping.
                     if len(accum) == 1:

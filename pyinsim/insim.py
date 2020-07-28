@@ -422,7 +422,7 @@ LCS_Mask_Siren = 0x300000       # bits  20-21 (Switches & 0x300000) - Siren   (0
 
 
 def _eat_null_chars(str_):
-    return str_.rstrip('\x00')
+    return str_.rstrip(b'\x00')
 
 
 class IS_ISI(object):
@@ -430,7 +430,7 @@ class IS_ISI(object):
 
     """
     pack_s = struct.Struct('4B2HBcH15sx15sx')
-    def __init__(self, ReqI=0, UDPPort=0, Flags=0, Prefix='\x00', Interval=0, Admin='', IName='pyinsim'):
+    def __init__(self, ReqI=0, UDPPort=0, Flags=0, Prefix=b'\x00', Interval=0, Admin=b'', IName=b'pyinsim'):
         """Create a new IS_ISI packet.
 
         Args:
@@ -550,7 +550,7 @@ class IS_SCH(object):
 
     """
     pack_s = struct.Struct('4Bc3B')
-    def __init__(self, ReqI=0, CharB='\x00', Flags=0):
+    def __init__(self, ReqI=0, CharB=b'\x00', Flags=0):
         """Initialise a new IS_SCH packet.
 
         Args:
@@ -699,7 +699,7 @@ class IS_MST(object):
 
     """
     pack_s = struct.Struct('4B63sx')
-    def __init__(self, ReqI=0, Msg=''):
+    def __init__(self, ReqI=0, Msg=b''):
         """Initialise a new IS_MST packet.
 
         Args:
@@ -720,7 +720,7 @@ class IS_MTC(object):
 
     """
     pack_s = struct.Struct('8B')
-    def __init__(self, ReqI=0, Sound=0, UCID=0, PLID=0, Msg=''):
+    def __init__(self, ReqI=0, Sound=0, UCID=0, PLID=0, Msg=b''):
         """Initialise a new IS_MTC packet.
 
         Args:
@@ -1102,7 +1102,7 @@ class IS_MSX(object):
 
     """
     pack_s = struct.Struct('4B95sx')
-    def __init__(self, ReqI=0, Msg=''):
+    def __init__(self, ReqI=0, Msg=b''):
         """Initialise a new IS_MSX packet.
 
         Args:
@@ -1123,7 +1123,7 @@ class IS_MSL(object):
 
     """
     pack_s = struct.Struct('4B127sx')
-    def __init__(self, ReqI=0, Sound=0, Msg=''):
+    def __init__(self, ReqI=0, Sound=0, Msg=b''):
         """Initialise a new IS_MSL packet.
 
         Args:
@@ -1204,7 +1204,7 @@ class IS_BTN(object):
 
     """
     pack_s = struct.Struct('12B')
-    def __init__(self, ReqI=0, UCID=0, ClickID=0, Inst=0, BStyle=0, TypeIn=0, L=0, T=0, W=0, H=0, Text=''):
+    def __init__(self, ReqI=0, UCID=0, ClickID=0, Inst=0, BStyle=0, TypeIn=0, L=0, T=0, W=0, H=0, Text=b''):
         """Initialise a new IS_BTN packet.
 
         Args:
@@ -1262,7 +1262,7 @@ class IS_RIP(object):
 
     """
     pack_s = struct.Struct('8B2H63sx')
-    def __init__(self, ReqI=0, Error=0, MPR=0, Paused=0, Options=0, CTime=0, TTime=0, RName=''):
+    def __init__(self, ReqI=0, Error=0, MPR=0, Paused=0, Options=0, CTime=0, TTime=0, RName=b''):
         """Initialise a new IS_RIP packet.
 
         Args:
@@ -1299,7 +1299,7 @@ class IS_SSH(object):
 
     """
     pack_s = struct.Struct('8B31sx')
-    def __init__(self, ReqI=0, Error=0, BMP=''):
+    def __init__(self, ReqI=0, Error=0, BMP=b''):
         """Initialise a new IS_SSH packet.
 
         Args:
@@ -1492,7 +1492,7 @@ class IS_ACR(object):
     pack_s = struct.Struct('8B')
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.Zero, self.UCID, self.Admin, self.Result, self.Sp3 = self.pack_s.unpack(data[:8])
-        self.Text = struct.unpack('%dsx' % self.Size - 9, data[8:])
+        self.Text = struct.unpack('%dsx' % (self.Size - 9), data[8:])[0]
         self.Text = _eat_null_chars(self.Text)
         return self
 
@@ -1613,7 +1613,7 @@ class HInfo(object):
 
 class IR_SEL(object):
     pack_s = struct.Struct('4B31sx15sx15sx')
-    def __init__(self, ReqI=0, HName='', Admin='', Spec=''):
+    def __init__(self, ReqI=0, HName=b'', Admin=b'', Spec=b''):
         self.Size = 68
         self.Type = IRP_SEL
         self.ReqI = ReqI
