@@ -1,6 +1,6 @@
 # core.py - core library module for pyinsim
 #
-# Copyright 2008-2015 Alex McBride <xandermcbride@gmail.com>
+# Copyright 2008-2020 Alex McBride <xandermcbride@gmail.com>
 #
 # This software may be used and distributed according to the terms of the
 # GNU Lesser General Public License version 3 or any later version.
@@ -14,7 +14,7 @@ import threading
 import time
 
 # Libraries
-import insim as insim_
+import pyinsim.insim as insim_
 
 __all__ = [
     'EVT_ALL',

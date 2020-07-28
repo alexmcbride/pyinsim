@@ -1,6 +1,6 @@
 # func.py - helper functions module for pyinsim
 #
-# Copyright 2008-2015 Alex McBride <xandermcbride@gmail.com>
+# Copyright 2008-2020 Alex McBride <xandermcbride@gmail.com>
 #
 # This software may be used and distributed according to the terms of the
 # GNU Lesser General Public License version 3 or any later version.
@@ -9,14 +9,11 @@
 import re
 import math
 
-import strmanip
+import pyinsim.strmanip as strmanip
 
-__all__ = ['deg', 'dist', 'fromunicode', 'intersects', 'km', 'kph', 'length', 'miles', 'mph', 'mps', 'rad', 'rpm', 'stripcols', 'time', 'timestr', 'tounicode']
-
-
-_COLOUR_REGEX = re.compile('\^[0-9]')
-_ENC_REGEX = re.compile('\^[LETBJCGHSK]')
-_ENC_COL_REGEX = re.compile('\^[LETBJCGHSK0-9]')
+_COLOUR_REGEX = re.compile(r'\^[0-9]')
+_ENC_REGEX = re.compile(r'\^[LETBJCGHSK]')
+_ENC_COL_REGEX = re.compile(r'\^[LETBJCGHSK0-9]')
 
 def stripcols(str_):
     """Strip color codes (^3, ^7 etc..) from a string."""
@@ -90,7 +87,7 @@ def rad(degrees):
 
 def rpm(radians):
     """Convert radians to RPM."""
-    return radians * 9.549295;
+    return radians * 9.549295
 
 def dist(a=(0,0,0), b=(0,0,0)):
     """Determine the distance between two points."""
