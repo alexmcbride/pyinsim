@@ -3,20 +3,20 @@
 import pyinsim
 
 def init(insim):
-    print 'InSim initialized'
+    print('InSim initialized')
     
 def closed(insim):
-    print 'InSim connection closed'
+    print('InSim connection closed')
     
 def error(insim):
-    print 'InSim error:'
+    print('InSim error:')
     import traceback
     traceback.print_exc()
 
 def all(insim, packet):
-    print vars(packet)
+    print(vars(packet))
 
-insim = pyinsim.insim('127.0.0.1', 29999, Admin='')
+insim = pyinsim.insim('127.0.0.1', 58672, Admin='YourAdminPassword')
 
 insim.bind(pyinsim.EVT_INIT, init)
 insim.bind(pyinsim.EVT_CLOSE, closed)

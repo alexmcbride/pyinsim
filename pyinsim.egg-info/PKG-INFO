@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: pyinsim
+Version: 2.1.0
+Summary: InSim library for the Python programming language
+Home-page: https://github.com/alexmcbride/pyinsim
+Author: Alex McBride
+Author-email: xandermcbride@gmail.com
+License-File: COPYING
+License-File: COPYING.LESSER

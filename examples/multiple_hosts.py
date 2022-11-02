@@ -8,11 +8,17 @@ import random
 
 NUMBER_HOSTS = 3
 
+def autstr(ob):
+    """AutoString 
+    Automatically converts bytes to string if it has to
+    """
+    return ob.decode() if type(ob)==bytes else ob
+
 class RandomRelayPicker(object):
     def __init__(self, count):       
         # Create 'count' number relay hosts.
-        for i in xrange(count):
-            relay = pyinsim.relay(name='Relay %d' % (i + 1))
+        for i in range(count):
+            relay = pyinsim.relay(name='Relay {}'.format(i + 1))
             relay.hosts = [] # Give each relay its own host list.
             
             # Bind events.
@@ -47,20 +53,20 @@ class RandomRelayPicker(object):
             host = random.choice(relay.hosts)
         except IndexError:
             relay.close()
-            print 'There are no hosts!' # Unlikely :p
+            print('There are no hosts!') # Unlikely :p
         else:
-            print 'Selected host: %s (%s)' % (pyinsim.stripcols(host.HName), relay.name)
+            print('Selected host: {} ({})'.format(pyinsim.stripcols(autstr(host.HName)), autstr(relay.name)))
             relay.send(pyinsim.IRP_SEL, HName=host.HName) # Select host.
             relay.send(pyinsim.ISP_TINY, ReqI=255, SubT=pyinsim.TINY_NCN) # Request conns list.
             
     def relay_error(self, relay, err):
         relay.close()        
-        print 'Error %d on host %s' % (err.ErrNo, relay.name)
+        print('Error {} on host {}'.format(autstr(err.ErrNo), autstr(relay.name)))
             
     def new_connection(self, relay, ncn):
         # Print out connection name (except for host)
         if ncn.UCID:
-            print 'Connection %s on host %s' % (ncn.UName, relay.name)
+            print('Connection {} on host {}'.format(autstr(ncn.UName), autstr(relay.name)))
             
             
 if __name__ == '__main__':

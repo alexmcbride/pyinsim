@@ -490,10 +490,6 @@ class _InSim(_Binding):
             The packet that was sent.
         
         """
-        for key in kwargs:
-            if type(kwargs[key])==str : #To Byte conversion
-                kwargs[key] = kwargs[key].encode("utf-8")
-
         packet = _PACKET_MAP[type_](**kwargs)
         self._tcp.send(packet.pack())
         return packet

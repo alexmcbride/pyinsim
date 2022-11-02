@@ -7,7 +7,7 @@ import pyinsim
 try:
     import winsound
 except ImportError:
-    print 'Error: this example only works on Windows'
+    print('Error: this example only works on Windows')
     sys.exit()
 
 def outgauge_packet(outgauge, packet):
@@ -15,7 +15,7 @@ def outgauge_packet(outgauge, packet):
     if packet.ShowLights & pyinsim.DL_SHIFT:
         # Play sound.
         winsound.PlaySound('SystemAsterisk', winsound.SND_ALIAS)
-        
+
 # Initialize OutGauge. Set timeout to 30 seconds.
 outgauge = pyinsim.outgauge('127.0.0.1', 30000, outgauge_packet, 30.0)
 
