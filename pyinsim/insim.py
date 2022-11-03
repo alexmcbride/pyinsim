@@ -536,7 +536,7 @@ class IS_TTC(object):
 
 class IS_STA(object):
     """STAte packet, sent whenever the data in the packet changes. To request
-    this packet send a ``IS_TINY`` with a ``ReqI`` of non-zero and a ``SubT`` of ``TINY_STA``.
+    this packet send a ``IS_TINY`` with a ``ReqI`` of non-zero and a ``SubT`` of ``TINY_SST``.
 
     """
     pack_s = struct.Struct('4BfH10B5sx2B')
@@ -1050,6 +1050,8 @@ class IS_REO(object):
         return self.pack_s.pack(self.Size, self.Type, self.ReqI, len(self.PLID)) + plid
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.NumP = self.pack_s.unpack(data[:4])
+        data = list(data) if isinstance(data, (int, str)) else data
+        data = list(map(str, data))
         self.PLID = [ord(data[4+i]) for i in range(self.NumP)]
         return self
 
