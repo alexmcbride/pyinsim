@@ -518,9 +518,9 @@ class _InSim(_Binding):
         """
         msg = msg.decode() if type(msg)==bytes else msg #Encoding for Python 3
         if ucid or plid:
-            self._tcp.send(insim_.IS_MTC(Msg=str(msg).encode("utf-8"), UCID=ucid, PLID=plid).pack())
-        elif msg.startswith('/') and len(msg) < 64:
-            self._tcp.send(insim_.IS_MST(Msg=str(msg).encode("utf-8")).pack())            
+            self._tcp.send(insim_.IS_MTC(Msg=msg, UCID=ucid, PLID=plid).pack())
+        elif msg.startswith(b'/') and len(msg) < 64:
+            self._tcp.send(insim_.IS_MST(Msg=msg).pack())            
         elif len(msg) < 96:
             self._tcp.send(insim_.IS_MSX(Msg=str(msg).encode("utf-8")).pack())
         else:

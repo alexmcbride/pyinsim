@@ -1050,8 +1050,6 @@ class IS_REO(object):
         return self.pack_s.pack(self.Size, self.Type, self.ReqI, len(self.PLID)) + plid
     def unpack(self, data):
         self.Size, self.Type, self.ReqI, self.NumP = self.pack_s.unpack(data[:4])
-        data = list(data) if isinstance(data, (int, str)) else data
-        data = list(map(str, data))
         self.PLID = [ord(data[4+i]) for i in range(self.NumP)]
         return self
 
