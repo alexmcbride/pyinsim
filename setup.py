@@ -15,3 +15,7 @@ setup(name='pyinsim',
       packages=['pyinsim'],
       data_files=[('docs', doc_files),
                   ('examples', example_files)])
+
+
+# USE FOR INSTALLATION (windows/anaconda env):
+# python -m pip install --user -e . 

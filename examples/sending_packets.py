@@ -3,7 +3,7 @@
 import pyinsim
 
 # Init new InSim object.
-insim = pyinsim.insim('127.0.0.1', 29999, Admin='')
+insim = pyinsim.insim('127.0.0.1', 58672, Admin='YourAdminPassword')
 
 # Send an MST packet with the message 'Hello, InSim!' to the game.
 insim.send(pyinsim.ISP_MST, Msg='Hello, InSim!')

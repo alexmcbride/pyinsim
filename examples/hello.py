@@ -2,8 +2,8 @@
 
 import pyinsim
 
-# Initialize the InSim system
-insim = pyinsim.insim('127.0.0.1', 29999, Admin='')
+# Initialize the InSim system #The IP and Port are to be found in the options when hosting a server
+insim = pyinsim.insim('127.0.0.1', 58672, Admin='YourAdminPassword')
 
 # Send message 'Hello, InSim!' to the game
 insim.sendm('Hello, InSim!')

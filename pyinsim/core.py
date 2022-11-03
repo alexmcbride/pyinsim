@@ -158,6 +158,10 @@ def insim(host='127.0.0.1', port=29999, ReqI=0, UDPPort=0, Flags=0,
         An initialized InSim object.
     
     """
+    Admin = Admin if type(Admin)==bytes else Admin.encode("utf-8")
+    IName = IName if type(IName)==bytes else IName.encode("utf-8")
+    name = name if type(name)==bytes else name.encode("utf-8")
+
     insim = _InSim(name)
     insim._connect(host, port, UDPPort)
     insim.send(insim_.ISP_ISI,
@@ -486,6 +490,10 @@ class _InSim(_Binding):
             The packet that was sent.
         
         """
+        for key in kwargs:
+            if type(kwargs[key])==str : #To Byte conversion
+                kwargs[key] = kwargs[key].encode("utf-8")
+
         packet = _PACKET_MAP[type_](**kwargs)
         self._tcp.send(packet.pack())
         return packet
@@ -508,14 +516,15 @@ class _InSim(_Binding):
             plid - The ID of the player to send the message to.
         
         """
+        msg = msg.decode() if type(msg)==bytes else msg #Encoding for Python 3
         if ucid or plid:
             self._tcp.send(insim_.IS_MTC(Msg=msg, UCID=ucid, PLID=plid).pack())
         elif msg.startswith(b'/') and len(msg) < 64:
             self._tcp.send(insim_.IS_MST(Msg=msg).pack())            
         elif len(msg) < 96:
-            self._tcp.send(insim_.IS_MSX(Msg=msg).pack())
+            self._tcp.send(insim_.IS_MSX(Msg=str(msg).encode("utf-8")).pack())
         else:
-            self._tcp.send(insim_.IS_MSX(Msg=msg[:95]).pack())
+            self._tcp.send(insim_.IS_MSX(Msg=str(msg[:95]).encode("utf-8")).pack())
             
     def _handle_connect(self):     
         self.connected = True

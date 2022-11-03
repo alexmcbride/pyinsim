@@ -536,7 +536,7 @@ class IS_TTC(object):
 
 class IS_STA(object):
     """STAte packet, sent whenever the data in the packet changes. To request
-    this packet send a ``IS_TINY`` with a ``ReqI`` of non-zero and a ``SubT`` of ``TINY_STA``.
+    this packet send a ``IS_TINY`` with a ``ReqI`` of non-zero and a ``SubT`` of ``TINY_SST``.
 
     """
     pack_s = struct.Struct('4BfH10B5sx2B')

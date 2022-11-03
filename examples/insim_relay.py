@@ -3,11 +3,17 @@
 import pyinsim
 
 # Replace with host name
-HOST_NAME = 'Dead Men Racing'
+HOST_NAME = 'RallyX Layout Bw'
+
+def autstr(ob):
+    """AutoString 
+    Automatically converts bytes to string if it has to
+    """
+    return ob.decode() if type(ob)==bytes else ob
 
 def new_connection(relay, ncn):
     # Print out connection name.
-    print 'New Connection:', ncn.UName
+    print( 'New Connection:', autstr(ncn.UName))
 
 # Initialize relay host.
 relay = pyinsim.relay(HName=HOST_NAME)
